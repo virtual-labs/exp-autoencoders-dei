@@ -104,13 +104,7 @@
                 <div class="content-grid">
                     <div class="code-panel">
                         <div class="code-block">
-                            <pre><code><span class="comment"># ============================================================================</span>
-<span class="comment"># IMPORT LIBRARIES</span>
-<span class="comment"># ============================================================================</span>
-<span class="keyword">import</span> torch
-<span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn
-<span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim
-<span class="keyword">from</span> torchvision <span class="keyword">import</span> datasets, transforms
+                            <pre><code>
 <span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader
 <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt
 <span class="keyword">import</span> numpy <span class="keyword">as</span> np</code></pre>
@@ -190,10 +184,9 @@ test_loader = DataLoader(test_data, batch_size=<span class="number">128</span>, 
                 <div class="content-grid">
                     <div class="code-panel">
                         <div class="code-block">
-                            <pre><code><span class="comment"># ============================================================================</span>
+                            <pre><code>
 <span class="comment"># Architecture: Deeper network with BatchNorm, Dropout, and 2D latent space</span>
 <span class="comment"># Progression: 784 → 512 → 256 → 128 → 64 → 32 → 16 → 8 → 4 → 2</span>
-<span class="comment"># ============================================================================</span>
 <span class="keyword">class</span> <span class="class-name">Autoencoder</span>(nn.Module):
     <span class="keyword">def</span> <span class="function">__init__</span>(<span class="keyword">self</span>):
         <span class="builtin">super</span>().__init__()
@@ -310,10 +303,9 @@ test_loader = DataLoader(test_data, batch_size=<span class="number">128</span>, 
                 <div class="content-grid">
                     <div class="code-panel">
                         <div class="code-block">
-                            <pre><code><span class="comment"># ============================================================================</span>
+                            <pre><code>
 <span class="comment"># TRAINING LOOP WITH REGULARIZATION</span>
 <span class="comment"># Uses combined MSE + L1 loss with gradient clipping</span>
-<span class="comment"># ============================================================================</span>
 
 device = torch.device(<span class="string">"cuda"</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">"cpu"</span>)
 model = model.to(device)
@@ -367,25 +359,9 @@ best_loss = <span class="builtin">float</span>(<span class="string">'inf'</span>
                     <div class="output-panel">
                         <div class="output-box">
                             <div id="output-4" style="display: none;">
-                                <div class="output-text">Starting training...</div>
-                                <div class="training-progress">
-                                    <canvas id="trainingCanvas" width="600" height="300"></canvas>
-                                    <div class="training-metrics">
-                                        <div class="metric-box">
-                                            <div class="metric-label">Epoch</div>
-                                            <div class="metric-value" id="currentEpoch">0</div>
-                                        </div>
-                                        <div class="metric-box">
-                                            <div class="metric-label">Loss</div>
-                                            <div class="metric-value" id="lossValue">-</div>
-                                        </div>
-                                        <div class="metric-box">
-                                            <div class="metric-label">Best Loss</div>
-                                            <div class="metric-value" id="bestLoss">-</div>
-                                        </div>
-                                    </div>
+                                <div class="training-output" id="trainingOutput">
+                                    <div class="output-text">Starting training...</div>
                                 </div>
-                                <div class="output-text" id="trainingStatus">Ready to train...</div>
                             </div>
                         </div>
                     </div>
@@ -397,10 +373,9 @@ best_loss = <span class="builtin">float</span>(<span class="string">'inf'</span>
                 <div class="content-grid">
                     <div class="code-panel">
                         <div class="code-block">
-                            <pre><code><span class="comment"># ============================================================================</span>
+                            <pre><code>
 <span class="comment"># VISUALIZATION: BASIC RECONSTRUCTION</span>
 <span class="comment"># Display original, noisy, and reconstructed images side-by-side</span>
-<span class="comment"># ============================================================================</span>
 
 model.eval()
 images, _ = <span class="builtin">next</span>(<span class="builtin">iter</span>(test_loader))
@@ -449,11 +424,6 @@ plt.show()
                                 <div class="reconstruction-viz">
                                     <img src="images/improved_reconstruction.png" alt="Reconstruction Results"
                                         class="result-image">
-                                    <div class="image-labels">
-                                        <span>Original</span>
-                                        <span>Noisy Input</span>
-                                        <span>Reconstructed</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -466,10 +436,7 @@ plt.show()
                 <div class="content-grid">
                     <div class="code-panel">
                         <div class="code-block">
-                            <pre><code><span class="comment"># ============================================================================</span>
-<span class="comment"># NOISE ROBUSTNESS TEST</span>
-<span class="comment"># Tests model performance at different noise levels</span>
-<span class="comment"># ============================================================================</span>
+                            <pre><code>
 
 noise_levels = [<span class="number">0.1</span>, <span class="number">0.25</span>, <span class="number">0.4</span>, <span class="number">0.6</span>]
 
@@ -503,8 +470,8 @@ noise_levels = [<span class="number">0.1</span>, <span class="number">0.25</span
                                         </select>
                                     </div>
                                     <div class="control-group">
-                                        <label for="noiseSlider">Noise Level: <span id="noiseValue">0.30</span></label>
-                                        <input type="range" id="noiseSlider" min="0" max="100" value="30"
+                                        <label for="noiseSlider">Noise Level: <span id="noiseValue">0.25</span></label>
+                                        <input type="range" id="noiseSlider" min="0" max="100" value="25"
                                             class="noise-slider">
                                         <div class="noise-markers">
                                             <span>0.0</span>
@@ -518,17 +485,21 @@ noise_levels = [<span class="number">0.1</span>, <span class="number">0.25</span
                                 <div class="noise-results" id="noiseResults">
                                     <h4>Reconstruction Results:</h4>
                                     <div class="image-labels">
-                                        <span>Original</span>
-                                        <span>Noisy Input</span>
-                                        <span>Reconstructed</span>
-                                    </div>
-                                    <div class="image-labels">
-                                        <img id="originalImage" src="images/original.png" alt="Original"
-                                            class="result-image">
-                                        <img id="noisyImage" src="images/level1_noise_0.1_input.png" alt="Noisy Input"
-                                            class="result-image">
-                                        <img id="reconstructedImage" src="images/level1_noise_0.1_reconstructed.png"
-                                            alt="Reconstructed" class="result-image">
+                                        <div class="image-column">
+                                            <span>Original</span>
+                                            <img id="originalImage" src="images/original.png" alt="Original"
+                                                class="result-image">
+                                        </div>
+                                        <div class="image-column">
+                                            <span>Noisy Input</span>
+                                            <img id="noisyImage" src="images/level1_noise_0.1_input.png"
+                                                alt="Noisy Input" class="result-image">
+                                        </div>
+                                        <div class="image-column">
+                                            <span>Reconstructed</span>
+                                            <img id="reconstructedImage" src="images/level1_noise_0.1_reconstructed.png"
+                                                alt="Reconstructed" class="result-image">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -542,12 +513,7 @@ noise_levels = [<span class="number">0.1</span>, <span class="number">0.25</span
                 <div class="content-grid">
                     <div class="code-panel">
                         <div class="code-block">
-                            <pre><code><span class="comment"># ============================================================================</span>
-<span class="comment"># LATENT SPACE PROJECTION</span>
-<span class="comment"># 2D visualization showing class clusters in latent space</span>
-<span class="comment"># ============================================================================</span>
-
-model.eval()
+                            <pre><code>
 latents = []
 labels = []
 

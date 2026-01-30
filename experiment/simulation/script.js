@@ -579,15 +579,17 @@ function runStep4() {
 }
 
 function simulateTraining() {
-    const canvas = document.getElementById('trainingCanvas');
-    if (!canvas) return;
+    const outputContainer = document.getElementById('trainingOutput');
+    if (!outputContainer) return;
 
-    const ctx = canvas.getContext('2d');
-    const width = canvas.width = 600;
-    const height = canvas.height = 300;
+    // Clear previous content and add starting message
+    outputContainer.innerHTML = '<div class="output-text">Starting training...</div>';
 
     let currentEpoch = 0;
     const totalEpochs = 100;
+
+    // Show epochs every 5 iterations
+    const displayInterval = 5;
 
     const interval = setInterval(() => {
         if (currentEpoch >= totalEpochs) {
@@ -600,10 +602,14 @@ function simulateTraining() {
             setStepComplete(4);
             markStepComplete(4);
 
-            const statusElem = document.getElementById('trainingStatus');
-            if (statusElem) {
-                statusElem.textContent = `Training completed! Best Loss: ${Math.min(...TRAINING_LOSSES).toFixed(4)}`;
-            }
+            // Add completion message
+            const bestLoss = Math.min(...TRAINING_LOSSES);
+            const completionMsg = document.createElement('div');
+            completionMsg.className = 'output-text';
+            completionMsg.style.marginTop = '10px';
+            completionMsg.style.color = '#198754';
+            completionMsg.textContent = `Training completed! Best Loss: ${bestLoss.toFixed(4)}`;
+            outputContainer.appendChild(completionMsg);
 
             if (!appState.isRunningAll) {
                 setTimeout(() => {
@@ -614,93 +620,26 @@ function simulateTraining() {
             return;
         }
 
-        currentEpoch += 1; // Show each epoch individually
+        currentEpoch += 1;
 
-        // Update metrics
-        document.getElementById('currentEpoch').textContent = currentEpoch;
-        const lossElem = document.getElementById('lossValue');
-        const bestLossElem = document.getElementById('bestLoss');
+        // Display epoch info every 5 epochs
+        if (currentEpoch % displayInterval === 0) {
+            const epochLine = document.createElement('div');
+            epochLine.className = 'output-text';
+            epochLine.style.fontFamily = "'Consolas', 'Monaco', 'Courier New', monospace";
+            epochLine.style.fontSize = '0.85rem';
+            epochLine.style.padding = '2px 8px';
+            epochLine.style.borderLeft = 'none';
+            epochLine.style.background = 'transparent';
+            epochLine.style.margin = '0';
 
-        if (lossElem) {
-            lossElem.textContent = TRAINING_LOSSES[currentEpoch - 1].toFixed(4);
+            const loss = TRAINING_LOSSES[currentEpoch - 1];
+            epochLine.innerHTML = `Epoch [<span style="color: #6f42c1;">${currentEpoch}/${totalEpochs}</span>] Loss: <span style="color: #dc3545;">${loss.toFixed(4)}</span>`;
+
+            outputContainer.appendChild(epochLine);
         }
 
-        if (bestLossElem) {
-            bestLossElem.textContent = Math.min(...TRAINING_LOSSES.slice(0, currentEpoch)).toFixed(4);
-        }
-
-        // Update status
-        const statusElem = document.getElementById('trainingStatus');
-        if (statusElem) {
-            statusElem.textContent = `Epoch [${currentEpoch}/${totalEpochs}] Loss: ${TRAINING_LOSSES[currentEpoch - 1].toFixed(4)}`;
-        }
-
-        // Draw training curve
-        drawTrainingCurve(ctx, width, height, currentEpoch);
-
-    }, 50); // Small delay for smooth animation
-}
-
-function drawTrainingCurve(ctx, width, height, currentEpoch) {
-    // Clear canvas
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(0, 0, width, height);
-
-    // Draw axes
-    const padding = 40;
-    const graphWidth = width - 2 * padding;
-    const graphHeight = height - 2 * padding;
-
-    ctx.strokeStyle = '#333';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(padding, padding);
-    ctx.lineTo(padding, height - padding);
-    ctx.lineTo(width - padding, height - padding);
-    ctx.stroke();
-
-    // Labels
-    ctx.fillStyle = '#333';
-    ctx.font = '12px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText('Epoch', width / 2, height - 10);
-
-    ctx.save();
-    ctx.translate(15, height / 2);
-    ctx.rotate(-Math.PI / 2);
-    ctx.fillText('Loss', 0, 0);
-    ctx.restore();
-
-    // Draw loss curve
-    const minLoss = Math.min(...TRAINING_LOSSES);
-    const maxLoss = Math.max(...TRAINING_LOSSES);
-    const lossRange = maxLoss - minLoss;
-
-    ctx.strokeStyle = '#0d6efd';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-
-    for (let i = 0; i < currentEpoch; i++) {
-        const x = padding + (i / 100) * graphWidth;
-        const y = height - padding - ((TRAINING_LOSSES[i] - minLoss) / lossRange) * graphHeight;
-
-        if (i === 0) {
-            ctx.moveTo(x, y);
-        } else {
-            ctx.lineTo(x, y);
-        }
-    }
-
-    ctx.stroke();
-
-    // Draw current point
-    const lastX = padding + ((currentEpoch - 1) / 100) * graphWidth;
-    const lastY = height - padding - ((TRAINING_LOSSES[currentEpoch - 1] - minLoss) / lossRange) * graphHeight;
-
-    ctx.fillStyle = '#198754';
-    ctx.beginPath();
-    ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
-    ctx.fill();
+    }, 30); // Faster animation
 }
 
 // Step 5: Reconstruction Results
@@ -756,8 +695,8 @@ function setupNoiseControl() {
     const valueDisplay = document.getElementById('noiseValue');
     const classSelector = document.getElementById('classSelector');
 
-    // Available discrete noise levels
-    const noiseLevels = [0.1, 0.3, 0.5, 0.7, 0.9];
+    // Available discrete noise levels - matching the markers
+    const noiseLevels = [0.0, 0.25, 0.5, 0.75, 1.0];
 
     // Function to snap value to nearest discrete level
     function snapToNearestLevel(value) {
@@ -795,16 +734,16 @@ function setupNoiseControl() {
             updateNoiseImages(snappedValue, selectedClass);
         });
 
-        // Set initial images
-        updateNoiseImages(0.3, 'boot');
-        slider.value = 30; // Set to 0.3 initially
-        valueDisplay.textContent = '0.30';
+        // Set initial images - start at 0.25
+        updateNoiseImages(0.25, 'boot');
+        slider.value = 25; // Set to 0.25 initially
+        valueDisplay.textContent = '0.25';
     }
 
     // Handle class selection change
     if (classSelector) {
         classSelector.addEventListener('change', (e) => {
-            const rawValue = slider ? slider.value / 100 : 0.3;
+            const rawValue = slider ? slider.value / 100 : 0.25;
             const noiseLevel = snapToNearestLevel(rawValue);
             updateNoiseImages(noiseLevel, e.target.value);
         });
