@@ -2,38 +2,174 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
+      "question": "After training, what does the encoder of an autoencoder produce?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "A compressed latent representation of the input",
+        "b": "The final classification label",
+        "c": "The reconstruction loss value",
+        "d": "Random noise"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Correct because the encoder maps input to a lower-dimensional space.",
+        "b": "Incorrect because autoencoders reconstruct, they do not classify.",
+        "c": "Incorrect because loss is computed separately, not produced by the encoder.",
+        "d": "Incorrect because the encoder produces meaningful representations, not noise."
       },
       "correctAnswer": "a",
       "difficulty": "beginner"
     },
     {
-      "question": "This is a Sample Question 2?",
+      "question": "In the denoising autoencoder experiment, what should the target output be?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "The noisy input image",
+        "b": "A completely different image",
+        "c": "The original clean image",
+        "d": "The latent representation"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Incorrect because the goal is to reconstruct the clean version.",
+        "b": "Incorrect because autoencoders reconstruct the same image.",
+        "c": "Correct because the model learns to remove noise and recover the clean image.",
+        "d": "Incorrect because the output should be the reconstructed image, not latent code."
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
+    },
+    {
+      "question": "What type of noise is added to images when training the denoising autoencoder?",
+      "answers": {
+        "a": "Salt-and-pepper noise only",
+        "b": "Gaussian noise",
+        "c": "No noise is added",
+        "d": "Colour channel noise"
+      },
+      "explanations": {
+        "a": "Incorrect because while possible, Gaussian noise is used in this experiment.",
+        "b": "Correct because Gaussian noise with zero mean and std 0.25 is added.",
+        "c": "Incorrect because denoising autoencoders require noisy inputs.",
+        "d": "Incorrect because Fashion-MNIST is grayscale."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "If reconstruction loss decreases during training, it indicates:",
+      "answers": {
+        "a": "The model is learning to better reconstruct inputs",
+        "b": "The model is overfitting severely",
+        "c": "The latent dimension is too large",
+        "d": "The dataset is corrupted"
+      },
+      "explanations": {
+        "a": "Correct because lower loss means smaller difference between input and reconstruction.",
+        "b": "Incorrect because overfitting is indicated by training-validation gap, not just decreasing loss.",
+        "c": "Incorrect because loss decrease shows learning, regardless of dimension.",
+        "d": "Incorrect because decreasing loss shows successful training."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What activation function is used in the final decoder layer?",
+      "answers": {
+        "a": "ReLU",
+        "b": "Tanh",
+        "c": "Sigmoid",
+        "d": "Softmax"
+      },
+      "explanations": {
+        "a": "Incorrect because ReLU allows unbounded positive values.",
+        "b": "Incorrect because Tanh outputs [-1, 1], not [0, 1] for pixel values.",
+        "c": "Correct because Sigmoid outputs [0, 1], matching normalised pixel intensity range.",
+        "d": "Incorrect because Softmax is for probability distributions over classes."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "When visualising the latent space, what does clustering of similar items indicate?",
+      "answers": {
+        "a": "The model failed to learn",
+        "b": "The autoencoder has learned meaningful representations that group similar items together",
+        "c": "The training data was insufficient",
+        "d": "The latent dimension is too large"
+      },
+      "explanations": {
+        "a": "Incorrect because clustering shows the model learned meaningful patterns.",
+        "b": "Correct because similar items having similar latent codes shows good feature learning.",
+        "c": "Incorrect because good clustering indicates successful learning.",
+        "d": "Incorrect because clustering quality is independent of dimension size."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What does the bottleneck layer force the autoencoder to learn?",
+      "answers": {
+        "a": "How to add more noise to images",
+        "b": "Only the pixel colours of images",
+        "c": "A compressed representation capturing essential features of the input",
+        "d": "The exact copy of input without any compression"
+      },
+      "explanations": {
+        "a": "Incorrect because the bottleneck compresses information, not adds noise.",
+        "b": "Incorrect because it learns abstract features, not just colour values.",
+        "c": "Correct because limited capacity forces the network to prioritize important patterns.",
+        "d": "Incorrect because the bottleneck prevents storing full information."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Why is batch normalisation used in the autoencoder architecture?",
+      "answers": {
+        "a": "To reduce the number of training epochs to zero",
+        "b": "To stabilise training by normalising layer inputs and reducing internal covariate shift",
+        "c": "To eliminate the need for activation functions",
+        "d": "To automatically add noise to images"
+      },
+      "explanations": {
+        "a": "Incorrect because training is still required regardless of normalisation.",
+        "b": "Correct because BatchNorm helps maintain stable distributions across layers during training.",
+        "c": "Incorrect because activation functions provide non-linearity, BatchNorm doesn't replace them.",
+        "d": "Incorrect because noise addition is a separate data augmentation step."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What does PSNR (Peak Signal-to-Noise Ratio) measure?",
+      "answers": {
+        "a": "Training speed",
+        "b": "Reconstruction quality in decibels, with higher values indicating better quality",
+        "c": "Number of model parameters",
+        "d": "Latent space dimensionality"
+      },
+      "explanations": {
+        "a": "Incorrect because PSNR measures reconstruction quality, not speed.",
+        "b": "Correct because PSNR quantifies how close reconstructions are to originals.",
+        "c": "Incorrect because PSNR is a quality metric, not architecture metric.",
+        "d": "Incorrect because PSNR doesn't measure dimensions."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "If the autoencoder reconstructs training images perfectly but performs poorly on test images, what problem is occurring?",
+      "answers": {
+        "a": "Underfitting",
+        "b": "The latent dimension is too small",
+        "c": "The learning rate is too low",
+        "d": "Overfitting"
+      },
+      "explanations": {
+        "a": "Incorrect because underfitting means poor performance on both training and test data.",
+        "b": "Incorrect because small latent dimensions typically prevent overfitting, not cause it.",
+        "c": "Incorrect because low learning rate affects convergence speed, not generalisation.",
+        "d": "Correct because the model memorised training data instead of learning generalisable features."
+      },
+      "correctAnswer": "d",
+      "difficulty": "intermediate"
     }
   ]
 }

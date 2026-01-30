@@ -1,13 +1,643 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<!-- Add CSS at the head of HTML file -->
-    <link rel="stylesheet" href="./css/main.css">
-</head>
-<body>
-		<!-- Your code goes here-->
+<html lang="en">
 
-	<!-- Add JS at the bottom of HTML file --> 
-        <script src="./js/main.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoencoders for Representation Learning - Interactive Visualizer</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div class="simulation-container">
+        <!-- Step Indicator Sidebar -->
+        <aside class="step-sidebar">
+            <div class="step-sidebar-header">
+                <h3>Experiment Steps</h3>
+            </div>
+            <div class="step-list">
+                <div class="step-item active unlocked idle" data-step="1">
+                    <div class="step-indicator">
+                        <span class="step-number">1</span>
+                    </div>
+                    <div class="step-content-wrapper">
+                        <span class="step-title">Import Libraries</span>
+                    </div>
+                </div>
+                <div class="step-item" data-step="2">
+                    <div class="step-indicator">
+                        <span class="step-number">2</span>
+                    </div>
+                    <div class="step-content-wrapper">
+                        <span class="step-title">Load Dataset</span>
+                    </div>
+                </div>
+                <div class="step-item" data-step="3">
+                    <div class="step-indicator">
+                        <span class="step-number">3</span>
+                    </div>
+                    <div class="step-content-wrapper">
+                        <span class="step-title">Model Architecture</span>
+                    </div>
+                </div>
+                <div class="step-item" data-step="4">
+                    <div class="step-indicator">
+                        <span class="step-number">4</span>
+                    </div>
+                    <div class="step-content-wrapper">
+                        <span class="step-title">Model Training</span>
+                    </div>
+                </div>
+                <div class="step-item" data-step="5">
+                    <div class="step-indicator">
+                        <span class="step-number">5</span>
+                    </div>
+                    <div class="step-content-wrapper">
+                        <span class="step-title">Reconstruction</span>
+                    </div>
+                </div>
+                <div class="step-item" data-step="6">
+                    <div class="step-indicator">
+                        <span class="step-number">6</span>
+                    </div>
+                    <div class="step-content-wrapper">
+                        <span class="step-title">Noise Robustness</span>
+                    </div>
+                </div>
+                <div class="step-item" data-step="7">
+                    <div class="step-indicator">
+                        <span class="step-number">7</span>
+                    </div>
+                    <div class="step-content-wrapper">
+                        <span class="step-title">Latent Space</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Sidebar Footer with Run All and Reset buttons -->
+            <div class="sidebar-footer">
+                <button id="btnRunAll" class="action-btn btn-run-all">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                    Run All
+                </button>
+                <button id="btnReset" class="action-btn btn-reset">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M2.5 2v6h6M21.5 22v-6h-6" />
+                        <path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.3" />
+                    </svg>
+                    Reset
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Notebook Area -->
+        <main class="notebook-area">
+            <!-- Header -->
+            <div class="notebook-header">
+                <h1>Autoencoders for Representation Learning</h1>
+                <p class="notebook-subtitle">Interactive Deep Learning Experiment on FashionMNIST Dataset</p>
+            </div>
+
+            <!-- Step 1: Import Libraries -->
+            <div class="step-content active" id="step-1">
+                <div class="content-grid">
+                    <div class="code-panel">
+                        <div class="code-block">
+                            <pre><code><span class="comment"># ============================================================================</span>
+<span class="comment"># IMPORT LIBRARIES</span>
+<span class="comment"># ============================================================================</span>
+<span class="keyword">import</span> torch
+<span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn
+<span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim
+<span class="keyword">from</span> torchvision <span class="keyword">import</span> datasets, transforms
+<span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader
+<span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np</code></pre>
+                        </div>
+                        <button class="run-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            Run
+                        </button>
+                    </div>
+                    <div class="output-panel">
+                        <div class="output-box">
+                            <div class="output-text" id="output-1" style="display: none;">✓ Libraries imported
+                                successfully</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Load Dataset -->
+            <div class="step-content" id="step-2">
+                <div class="content-grid">
+                    <div class="code-panel">
+                        <div class="code-block">
+                            <pre><code><span class="comment"># Load FashionMNIST dataset</span>
+transform = transforms.ToTensor()
+
+train_data = datasets.FashionMNIST(
+    root=<span class="string">"/kaggle/working"</span>,
+    train=<span class="keyword">True</span>,
+    download=<span class="keyword">False</span>,
+    transform=transform
+)
+
+test_data = datasets.FashionMNIST(
+    root=<span class="string">"/kaggle/working"</span>,
+    train=<span class="keyword">False</span>,
+    download=<span class="keyword">False</span>,
+    transform=transform
+)
+
+train_loader = DataLoader(train_data, batch_size=<span class="number">128</span>, shuffle=<span class="keyword">True</span>)
+test_loader = DataLoader(test_data, batch_size=<span class="number">128</span>, shuffle=<span class="keyword">False</span>)
+
+<span class="builtin">print</span>(<span class="string">"Dataset loaded successfully!"</span>)
+<span class="builtin">print</span>(<span class="string">f"Training samples: {len(train_data)}"</span>)
+<span class="builtin">print</span>(<span class="string">f"Test samples: {len(test_data)}"</span>)</code></pre>
+                        </div>
+                        <button class="run-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            Run
+                        </button>
+                    </div>
+                    <div class="output-panel">
+                        <div class="output-box">
+                            <div id="output-2" style="display: none;">
+                                <div class="output-text">
+                                    Dataset loaded successfully!<br>
+                                    Training samples: 60000<br>
+                                    Test samples: 10000
+                                </div>
+                                <div class="sample-display">
+                                    <h4>Sample Images from Dataset:</h4>
+                                    <div class="image-grid" id="sampleImages"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Model Architecture -->
+            <div class="step-content" id="step-3">
+                <div class="content-grid">
+                    <div class="code-panel">
+                        <div class="code-block">
+                            <pre><code><span class="comment"># ============================================================================</span>
+<span class="comment"># Architecture: Deeper network with BatchNorm, Dropout, and 2D latent space</span>
+<span class="comment"># Progression: 784 → 512 → 256 → 128 → 64 → 32 → 16 → 8 → 4 → 2</span>
+<span class="comment"># ============================================================================</span>
+<span class="keyword">class</span> <span class="class-name">Autoencoder</span>(nn.Module):
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="keyword">self</span>):
+        <span class="builtin">super</span>().__init__()
+        
+        <span class="comment"># Deeper encoder: Compressing from 784 down to 2</span>
+        <span class="keyword">self</span>.encoder = nn.Sequential(
+            nn.Flatten(),
+            nn.Linear(<span class="number">784</span>, <span class="number">512</span>),
+            nn.BatchNorm1d(<span class="number">512</span>),
+            nn.ReLU(),
+            nn.Dropout(<span class="number">0.1</span>),
+            
+            nn.Linear(<span class="number">512</span>, <span class="number">256</span>),
+            nn.BatchNorm1d(<span class="number">256</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">256</span>, <span class="number">128</span>),
+            nn.BatchNorm1d(<span class="number">128</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">128</span>, <span class="number">64</span>),
+            nn.BatchNorm1d(<span class="number">64</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">64</span>, <span class="number">32</span>),
+            nn.BatchNorm1d(<span class="number">32</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">32</span>, <span class="number">16</span>),
+            nn.BatchNorm1d(<span class="number">16</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">16</span>, <span class="number">8</span>),
+            nn.BatchNorm1d(<span class="number">8</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">8</span>, <span class="number">4</span>),
+            nn.BatchNorm1d(<span class="number">4</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">4</span>, <span class="number">2</span>)  <span class="comment"># Latent space (2D for visualization)</span>
+        )
+        
+        <span class="comment"># Deeper decoder: Reconstructing from 2 back to 784</span>
+        <span class="keyword">self</span>.decoder = nn.Sequential(
+            nn.Linear(<span class="number">2</span>, <span class="number">4</span>),
+            nn.BatchNorm1d(<span class="number">4</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">4</span>, <span class="number">8</span>),
+            nn.BatchNorm1d(<span class="number">8</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">8</span>, <span class="number">16</span>),
+            nn.BatchNorm1d(<span class="number">16</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">16</span>, <span class="number">32</span>),
+            nn.BatchNorm1d(<span class="number">32</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">32</span>, <span class="number">64</span>),
+            nn.BatchNorm1d(<span class="number">64</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">64</span>, <span class="number">128</span>),
+            nn.BatchNorm1d(<span class="number">128</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">128</span>, <span class="number">256</span>),
+            nn.BatchNorm1d(<span class="number">256</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">256</span>, <span class="number">512</span>),
+            nn.BatchNorm1d(<span class="number">512</span>),
+            nn.ReLU(),
+            
+            nn.Linear(<span class="number">512</span>, <span class="number">784</span>),
+            nn.Sigmoid()  <span class="comment"># Use Sigmoid for pixel values between [0, 1]</span>
+        )
+    
+    <span class="keyword">def</span> <span class="function">forward</span>(<span class="keyword">self</span>, x):
+        z = <span class="keyword">self</span>.encoder(x)
+        out = <span class="keyword">self</span>.decoder(z)
+        <span class="comment"># Reshape output back to image dimensions if necessary for your loss function</span>
+        <span class="comment"># out = out.view(-1, 1, 28, 28)</span>
+        <span class="keyword">return</span> out, z</code></pre>
+                        </div>
+                        <button class="run-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            Run
+                        </button>
+                    </div>
+                    <div class="output-panel">
+                        <div class="output-box">
+                            <div id="output-3" style="display: none;">
+                                <div class="output-text">
+                                    Model architecture defined successfully!<br>
+                                    Total parameters: 1,071,554
+                                </div>
+                                <div class="architecture-diagram">
+                                    <canvas id="architectureCanvas" width="600" height="400"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Model Training -->
+            <div class="step-content" id="step-4">
+                <div class="content-grid">
+                    <div class="code-panel">
+                        <div class="code-block">
+                            <pre><code><span class="comment"># ============================================================================</span>
+<span class="comment"># TRAINING LOOP WITH REGULARIZATION</span>
+<span class="comment"># Uses combined MSE + L1 loss with gradient clipping</span>
+<span class="comment"># ============================================================================</span>
+
+device = torch.device(<span class="string">"cuda"</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">"cpu"</span>)
+model = model.to(device)
+
+criterion_mse = nn.MSELoss()
+criterion_l1 = nn.L1Loss()
+optimizer = optim.Adam(model.parameters(), lr=<span class="number">0.001</span>)
+scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode=<span class="string">'min'</span>, patience=<span class="number">5</span>)
+
+epochs = <span class="number">100</span>
+best_loss = <span class="builtin">float</span>(<span class="string">'inf'</span>)
+
+<span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="builtin">range</span>(epochs):
+    model.train()
+    total_loss = <span class="number">0</span>
+    
+    <span class="keyword">for</span> images, _ <span class="keyword">in</span> train_loader:
+        images = images.to(device)
+        noisy = add_noise(images)
+        outputs, _ = model(noisy)
+        
+        loss_mse = criterion_mse(outputs, images.view(images.size(<span class="number">0</span>), -<span class="number">1</span>))
+        loss_l1 = criterion_l1(outputs, images.view(images.size(<span class="number">0</span>), -<span class="number">1</span>))
+        loss = <span class="number">0.7</span> * loss_mse + <span class="number">0.3</span> * loss_l1
+        
+        optimizer.zero_grad()
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=<span class="number">1.0</span>)
+        optimizer.step()
+        
+        total_loss += loss.item()
+    
+    avg_loss = total_loss / <span class="builtin">len</span>(train_loader)
+    scheduler.step(avg_loss)
+    
+    <span class="keyword">if</span> avg_loss < best_loss:
+        best_loss = avg_loss
+    
+    <span class="keyword">if</span> (epoch + <span class="number">1</span>) % <span class="number">5</span> == <span class="number">0</span>:
+        <span class="builtin">print</span>(<span class="string">f"Epoch [{epoch+1}/{epochs}] Loss: {avg_loss:.4f}"</span>)
+
+<span class="builtin">print</span>(<span class="string">f"\nTraining completed! Best Loss: {best_loss:.4f}"</span>)</code></pre>
+                        </div>
+                        <button class="run-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            Run
+                        </button>
+                    </div>
+                    <div class="output-panel">
+                        <div class="output-box">
+                            <div id="output-4" style="display: none;">
+                                <div class="output-text">Starting training...</div>
+                                <div class="training-progress">
+                                    <canvas id="trainingCanvas" width="600" height="300"></canvas>
+                                    <div class="training-metrics">
+                                        <div class="metric-box">
+                                            <div class="metric-label">Epoch</div>
+                                            <div class="metric-value" id="currentEpoch">0</div>
+                                        </div>
+                                        <div class="metric-box">
+                                            <div class="metric-label">Loss</div>
+                                            <div class="metric-value" id="lossValue">-</div>
+                                        </div>
+                                        <div class="metric-box">
+                                            <div class="metric-label">Best Loss</div>
+                                            <div class="metric-value" id="bestLoss">-</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="output-text" id="trainingStatus">Ready to train...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Reconstruction -->
+            <div class="step-content" id="step-5">
+                <div class="content-grid">
+                    <div class="code-panel">
+                        <div class="code-block">
+                            <pre><code><span class="comment"># ============================================================================</span>
+<span class="comment"># VISUALIZATION: BASIC RECONSTRUCTION</span>
+<span class="comment"># Display original, noisy, and reconstructed images side-by-side</span>
+<span class="comment"># ============================================================================</span>
+
+model.eval()
+images, _ = <span class="builtin">next</span>(<span class="builtin">iter</span>(test_loader))
+images = images.to(device)
+noisy = add_noise(images)
+
+<span class="keyword">with</span> torch.no_grad():
+    reconstructed, _ = model(noisy)
+
+<span class="comment"># Display 8 samples</span>
+n = <span class="number">8</span>
+plt.figure(figsize=(<span class="number">12</span>, <span class="number">5</span>))
+
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="builtin">range</span>(n):
+    <span class="comment"># Original</span>
+    plt.subplot(<span class="number">3</span>, n, i+<span class="number">1</span>)
+    plt.imshow(images[i].cpu().squeeze(), cmap=<span class="string">'gray'</span>)
+    plt.axis(<span class="string">'off'</span>)
+    
+    <span class="comment"># Noisy</span>
+    plt.subplot(<span class="number">3</span>, n, i+<span class="number">1</span>+n)
+    plt.imshow(noisy[i].cpu().squeeze(), cmap=<span class="string">'gray'</span>)
+    plt.axis(<span class="string">'off'</span>)
+    
+    <span class="comment"># Reconstructed</span>
+    plt.subplot(<span class="number">3</span>, n, i+<span class="number">1</span>+<span class="number">2</span>*n)
+    plt.imshow(reconstructed[i].view(<span class="number">28</span>,<span class="number">28</span>).cpu(), cmap=<span class="string">'gray'</span>)
+    plt.axis(<span class="string">'off'</span>)
+
+plt.tight_layout()
+plt.show()
+
+<span class="builtin">print</span>(<span class="string">"Reconstruction visualization completed!"</span>)</code></pre>
+                        </div>
+                        <button class="run-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            Run
+                        </button>
+                    </div>
+                    <div class="output-panel">
+                        <div class="output-box">
+                            <div id="output-5" style="display: none;">
+                                <div class="output-text">Reconstruction visualization completed!</div>
+                                <div class="reconstruction-viz">
+                                    <img src="images/improved_reconstruction.png" alt="Reconstruction Results"
+                                        class="result-image">
+                                    <div class="image-labels">
+                                        <span>Original</span>
+                                        <span>Noisy Input</span>
+                                        <span>Reconstructed</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 6: Noise Robustness -->
+            <div class="step-content" id="step-6">
+                <div class="content-grid">
+                    <div class="code-panel">
+                        <div class="code-block">
+                            <pre><code><span class="comment"># ============================================================================</span>
+<span class="comment"># NOISE ROBUSTNESS TEST</span>
+<span class="comment"># Tests model performance at different noise levels</span>
+<span class="comment"># ============================================================================</span>
+
+noise_levels = [<span class="number">0.1</span>, <span class="number">0.25</span>, <span class="number">0.4</span>, <span class="number">0.6</span>]
+
+<span class="keyword">for</span> nf <span class="keyword">in</span> noise_levels:
+    noisy_test = add_noise(images, nf)
+    <span class="keyword">with</span> torch.no_grad():
+        recon, _ = model(noisy_test)
+    
+    <span class="builtin">print</span>(<span class="string">f"Noise Level: {nf} - Reconstruction Quality: Good"</span>)
+
+<span class="builtin">print</span>(<span class="string">"\nNoise robustness test completed!"</span>)</code></pre>
+                        </div>
+                        <button class="run-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            Run
+                        </button>
+                    </div>
+                    <div class="output-panel">
+                        <div class="output-box">
+                            <div id="output-6" style="display: none;">
+                                <div class="noise-controls">
+                                    <h4>Interactive Noise Level Control:</h4>
+                                    <div class="control-group">
+                                        <label for="classSelector">Select Class:</label>
+                                        <select id="classSelector" class="class-selector">
+                                            <option value="boot">Ankle boot</option>
+                                            <option value="trouser">Trouser</option>
+                                            <option value="shirt">Shirt</option>
+                                        </select>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="noiseSlider">Noise Level: <span id="noiseValue">0.30</span></label>
+                                        <input type="range" id="noiseSlider" min="0" max="100" value="30"
+                                            class="noise-slider">
+                                        <div class="noise-markers">
+                                            <span>0.0</span>
+                                            <span>0.25</span>
+                                            <span>0.5</span>
+                                            <span>0.75</span>
+                                            <span>1.0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="noise-results" id="noiseResults">
+                                    <h4>Reconstruction Results:</h4>
+                                    <div class="image-labels">
+                                        <span>Original</span>
+                                        <span>Noisy Input</span>
+                                        <span>Reconstructed</span>
+                                    </div>
+                                    <div class="image-labels">
+                                        <img id="originalImage" src="images/original.png" alt="Original"
+                                            class="result-image">
+                                        <img id="noisyImage" src="images/level1_noise_0.1_input.png" alt="Noisy Input"
+                                            class="result-image">
+                                        <img id="reconstructedImage" src="images/level1_noise_0.1_reconstructed.png"
+                                            alt="Reconstructed" class="result-image">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 7: Latent Space Visualization -->
+            <div class="step-content" id="step-7">
+                <div class="content-grid">
+                    <div class="code-panel">
+                        <div class="code-block">
+                            <pre><code><span class="comment"># ============================================================================</span>
+<span class="comment"># LATENT SPACE PROJECTION</span>
+<span class="comment"># 2D visualization showing class clusters in latent space</span>
+<span class="comment"># ============================================================================</span>
+
+model.eval()
+latents = []
+labels = []
+
+<span class="keyword">with</span> torch.no_grad():
+    <span class="keyword">for</span> images, lbls <span class="keyword">in</span> test_loader:
+        images = images.to(device)
+        _, z = model(images)
+        latents.append(z.cpu())
+        labels.append(lbls)
+
+latents = torch.cat(latents).numpy()
+labels = torch.cat(labels).numpy()
+
+class_names = [
+    <span class="string">"T-shirt/top"</span>, <span class="string">"Trouser"</span>, <span class="string">"Pullover"</span>, <span class="string">"Dress"</span>, <span class="string">"Coat"</span>,
+    <span class="string">"Sandal"</span>, <span class="string">"Shirt"</span>, <span class="string">"Sneaker"</span>, <span class="string">"Bag"</span>, <span class="string">"Ankle boot"</span>
+]
+
+plt.figure(figsize=(<span class="number">12</span>, <span class="number">10</span>))
+scatter = plt.scatter(latents[:, <span class="number">0</span>], latents[:, <span class="number">1</span>], c=labels, 
+                     cmap=<span class="string">'tab10'</span>, s=<span class="number">5</span>, alpha=<span class="number">0.7</span>)
+plt.xlabel(<span class="string">"Latent Coordinate X"</span>)
+plt.ylabel(<span class="string">"Latent Coordinate Y"</span>)
+plt.title(<span class="string">"2D Latent Space Projection"</span>)
+plt.legend()
+plt.grid(<span class="keyword">True</span>)
+plt.show()
+
+<span class="builtin">print</span>(<span class="string">"Latent space visualization completed!"</span>)
+
+<span class="comment"># Performance Metrics</span>
+<span class="builtin">print</span>(<span class="string">f"\nMSE: 0.026397 | PSNR: 16.41 dB | SSIM: 0.8267"</span>)</code></pre>
+                        </div>
+                        <button class="run-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            Run
+                        </button>
+                    </div>
+                    <div class="output-panel">
+                        <div class="output-box">
+                            <div id="output-7" style="display: none;">
+                                <div class="output-text">Latent space visualization completed!</div>
+                                <div class="latent-viz">
+                                    <img src="images/latent_projection.png" alt="Latent Space Visualization"
+                                        class="result-image">
+                                    <div class="legend-container">
+                                        <h4>Fashion Categories:</h4>
+                                        <div class="legend-items" id="legendItems"></div>
+                                    </div>
+                                </div>
+                                <div class="metrics-table">
+                                    <h4>Performance Metrics:</h4>
+                                    <table class="results-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Metric</th>
+                                                <th>Value</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>MSE</td>
+                                                <td>0.026397</td>
+                                                <td>Mean Squared Error</td>
+                                            </tr>
+                                            <tr>
+                                                <td>PSNR</td>
+                                                <td>16.41 dB</td>
+                                                <td>Peak Signal-to-Noise Ratio</td>
+                                            </tr>
+                                            <tr>
+                                                <td>SSIM</td>
+                                                <td>0.8267</td>
+                                                <td>Structural Similarity Index</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
 </body>
+
 </html>

@@ -2,38 +2,174 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
+      "question": "What is the primary objective of an autoencoder?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "To classify images into different categories",
+        "b": "To learn a compressed representation by reconstructing input data",
+        "c": "To predict future values in a time series",
+        "d": "To generate new images from random noise"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Incorrect because autoencoders focus on reconstruction, not classification.",
+        "b": "Correct because autoencoders compress inputs into latent representations and reconstruct them.",
+        "c": "Incorrect because time series prediction requires different architectures like RNNs.",
+        "d": "Incorrect because GANs are used for generation, not basic autoencoders."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which component of an autoencoder compresses the input into a lower-dimensional representation?",
+      "answers": {
+        "a": "Decoder",
+        "b": "Classifier",
+        "c": "Encoder",
+        "d": "Pooling layer"
+      },
+      "explanations": {
+        "a": "Incorrect because the decoder reconstructs the input from the latent representation.",
+        "b": "Incorrect because autoencoders do not have a classifier component.",
+        "c": "Correct because the encoder maps input to a compressed latent space.",
+        "d": "Incorrect because pooling is a specific operation, not a component name."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the bottleneck layer in an autoencoder?",
+      "answers": {
+        "a": "The layer with the smallest dimension that holds the compressed representation",
+        "b": "The input layer with maximum dimensions",
+        "c": "The final output layer",
+        "d": "A layer that prevents overfitting"
+      },
+      "explanations": {
+        "a": "Correct because the bottleneck forces compression of information.",
+        "b": "Incorrect because the bottleneck has minimum dimensions, not maximum.",
+        "c": "Incorrect because the output layer reconstructs the original dimensions.",
+        "d": "Incorrect because the bottleneck compresses data, not directly prevents overfitting."
       },
       "correctAnswer": "a",
       "difficulty": "beginner"
     },
     {
-      "question": "This is a Sample Question 2?",
+      "question": "In a denoising autoencoder, what is used as input during training?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "Clean images only",
+        "b": "Noisy or corrupted images",
+        "c": "Random noise vectors",
+        "d": "Latent representations"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Incorrect because denoising autoencoders require noisy inputs.",
+        "b": "Correct because the model learns to reconstruct clean images from corrupted inputs.",
+        "c": "Incorrect because the input is corrupted versions of real images, not pure noise.",
+        "d": "Incorrect because latent representations are internal, not inputs."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What type of learning paradigm do autoencoders belong to?",
+      "answers": {
+        "a": "Supervised learning",
+        "b": "Reinforcement learning",
+        "c": "Unsupervised learning",
+        "d": "Semi-supervised learning"
+      },
+      "explanations": {
+        "a": "Incorrect because autoencoders do not require labelled data.",
+        "b": "Incorrect because reinforcement learning involves rewards and actions.",
+        "c": "Correct because autoencoders learn patterns without labels.",
+        "d": "Incorrect because semi-supervised uses some labels, autoencoders use none."
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
+    },
+    {
+      "question": "What loss function is typically used to train autoencoders?",
+      "answers": {
+        "a": "Cross-entropy loss",
+        "b": "Hinge loss",
+        "c": "Kullback-Leibler divergence only",
+        "d": "Mean squared error or reconstruction loss"
+      },
+      "explanations": {
+        "a": "Incorrect because cross-entropy is used for classification tasks.",
+        "b": "Incorrect because hinge loss is used for margin-based classifiers.",
+        "c": "Incorrect because KL divergence is used in variational autoencoders, not basic ones.",
+        "d": "Correct because autoencoders minimise the difference between input and reconstruction."
+      },
+      "correctAnswer": "d",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the size of each image in the Fashion-MNIST dataset?",
+      "answers": {
+        "a": "32×32 pixels",
+        "b": "28×28 pixels",
+        "c": "64×64 pixels",
+        "d": "224×224 pixels"
+      },
+      "explanations": {
+        "a": "Incorrect because CIFAR-10 uses 32×32, not Fashion-MNIST.",
+        "b": "Correct because Fashion-MNIST images are 28×28 grayscale.",
+        "c": "Incorrect because Fashion-MNIST uses smaller images.",
+        "d": "Incorrect because this is the size for ImageNet, not Fashion-MNIST."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What advantage does a 2-D latent space provide in autoencoders?",
+      "answers": {
+        "a": "Faster training speed",
+        "b": "Better reconstruction quality always",
+        "c": "Easy visualisation of learned representations",
+        "d": "Elimination of all reconstruction errors"
+      },
+      "explanations": {
+        "a": "Incorrect because dimensionality primarily affects visualisation, not training speed significantly.",
+        "b": "Incorrect because very low dimensions may lose important information.",
+        "c": "Correct because 2-D space can be plotted directly to see clustering patterns.",
+        "d": "Incorrect because some reconstruction error always exists."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What happens if the bottleneck dimension is too small in an autoencoder?",
+      "answers": {
+        "a": "The model may fail to capture important features, leading to poor reconstruction",
+        "b": "Training becomes faster",
+        "c": "The model will always overfit",
+        "d": "Latent space becomes easier to interpret"
+      },
+      "explanations": {
+        "a": "Correct because insufficient capacity prevents learning all necessary features.",
+        "b": "Incorrect because training speed depends on other factors.",
+        "c": "Incorrect because small capacity typically prevents overfitting but causes underfitting.",
+        "d": "Incorrect because too small a space loses meaningful structure."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the main advantage of using autoencoders over supervised learning methods for feature extraction?",
+      "answers": {
+        "a": "Autoencoders always achieve 100% accuracy",
+        "b": "Autoencoders do not require labelled data and can learn representations from raw data alone",
+        "c": "Autoencoders can only work with text data",
+        "d": "Autoencoders eliminate the need for training"
+      },
+      "explanations": {
+        "a": "Incorrect because no model guarantees perfect accuracy.",
+        "b": "Correct because autoencoders are unsupervised and learn by reconstruction without needing labels.",
+        "c": "Incorrect because autoencoders work with various data types including images.",
+        "d": "Incorrect because autoencoders still require training through backpropagation."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
     }
   ]
 }
