@@ -1031,3 +1031,13 @@ body {
     border-color: var(--text-muted);
     transform: translateY(-1px);
 }
+.btn-download {
+    background-color: var(--accent-blue);
+    color: white;
+}
+
+.btn-download:hover {
+    background-color: var(--accent-blue-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}

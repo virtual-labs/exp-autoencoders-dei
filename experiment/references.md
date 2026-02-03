@@ -1,4 +1,4 @@
-## References
+### References
 
 1. G. E. Hinton and R. R. Salakhutdinov, "Reducing the dimensionality of data with neural networks," *Science*, vol. 313, no. 5786, pp. 504-507, 2006.
 

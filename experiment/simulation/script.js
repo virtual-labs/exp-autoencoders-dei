@@ -870,56 +870,7 @@ function sleep(ms) {
 /**
  * Runs all steps sequentially
  */
-async function runAllSteps() {
-    const runBtn = document.getElementById('btnRunAll');
-    if (runBtn.disabled) return;
 
-    runBtn.disabled = true;
-    appState.isRunningAll = true;
-    runBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" opacity="0.25"/><path d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"/></svg> Running...';
-
-    const totalSteps = 7;
-    const stepFunctions = [runStep1, runStep2, runStep3, runStep4, runStep5, runStep6, runStep7];
-
-    for (let i = 0; i < totalSteps; i++) {
-        const stepNum = i + 1;
-
-        // Scroll to current step
-        const stepElem = document.getElementById(`step-${stepNum}`);
-        if (stepElem) {
-            stepElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        // If already completed, skip
-        if (appState.completedSteps.includes(stepNum)) {
-            await sleep(300);
-            continue;
-        }
-
-        // Run the step function
-        stepFunctions[i]();
-
-        // Wait for step to complete
-        await new Promise(resolve => {
-            const checkInterval = setInterval(() => {
-                if (appState.completedSteps.includes(stepNum)) {
-                    clearInterval(checkInterval);
-                    resolve();
-                }
-            }, 200);
-        });
-
-        // Small delay between steps
-        await sleep(500);
-    }
-
-    appState.isRunningAll = false;
-    runBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> ✓ Done';
-    setTimeout(() => {
-        runBtn.disabled = false;
-        runBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Run All';
-    }, 2000);
-}
 
 /**
  * Resets the entire simulation
@@ -934,12 +885,12 @@ function resetSimulation() {
  * Initializes Run All and Reset button event listeners
  */
 function initializeSidebarActions() {
-    const runAllBtn = document.getElementById('btnRunAll');
+    // const runAllBtn = document.getElementById('btnRunAll');
     const resetBtn = document.getElementById('btnReset');
 
-    if (runAllBtn) {
-        runAllBtn.addEventListener('click', runAllSteps);
-    }
+    // if (runAllBtn) {
+    //     runAllBtn.addEventListener('click', runAllSteps);
+    // }
 
     if (resetBtn) {
         resetBtn.addEventListener('click', resetSimulation);

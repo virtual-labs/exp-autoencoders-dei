@@ -75,12 +75,14 @@
             </div>
             <!-- Sidebar Footer with Run All and Reset buttons -->
             <div class="sidebar-footer">
-                <button id="btnRunAll" class="action-btn btn-run-all">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8 5v14l11-7z" />
+                <a href="../autoencoders_experiment.pdf" class="action-btn btn-download" download id="btnDownloadPdf" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
                     </svg>
-                    Run All
-                </button>
+                    Download PDF
+                </a>
                 <button id="btnReset" class="action-btn btn-reset">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M2.5 2v6h6M21.5 22v-6h-6" />
