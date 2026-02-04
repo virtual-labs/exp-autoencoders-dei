@@ -15,9 +15,6 @@ An autoencoder consists of two main parts:
 
 The network is trained to minimise the difference between the input and its reconstruction, forcing it to learn the most important features of the data.
 
-![Autoencoder Architecture](images/image4.png)
-*Figure 1- Denoising autoencoder (Source: Deep Learning. Ian Goodfellow, Yoshua Bengio, and Aaron Courville, MIT Press.)*
-
 **Basic Autoencoder:**
 
 A basic autoencoder learns to compress and reconstruct clean input data. The input image is passed through the encoder, compressed into a bottleneck (latent) representation, and then reconstructed by the decoder. 
@@ -44,10 +41,7 @@ The training process for a denoising autoencoder can be written as:
 2. Target: ![](images/image2.png) (clean image)
 3. Loss: ![](images/image3.png)
 
-As illustrated in Fig. 3, the reconstruction loss is computed by comparing the decoder's output with the original clean image. This forces the network to learn features that are resilient to noise and capture the underlying structure of the data.
-
-![Denoising Autoencoder](images/image5.png)
-*Fig. 3: Denoising autoencoder architecture showing reconstruction of clean images from noisy inputs and computation of reconstruction loss.*
+As illustrated in Figure 2, the reconstruction loss is computed by comparing the decoder's output with the original clean image. This forces the network to learn features that are resilient to noise and capture the underlying structure of the data.
 
 **Latent Space Representation:**
 
