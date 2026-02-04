@@ -41,7 +41,7 @@ The training process for a denoising autoencoder can be written as:
 2. Target: ![](images/image2.png) (clean image)
 3. Loss: ![](images/image3.png)
 
-As illustrated in Figure 2, the reconstruction loss is computed by comparing the decoder's output with the original clean image. This forces the network to learn features that are resilient to noise and capture the underlying structure of the data.
+The reconstruction loss is computed by comparing the decoder's output with the original clean image. This forces the network to learn features that are resilient to noise and capture the underlying structure of the data.
 
 **Latent Space Representation:**
 
