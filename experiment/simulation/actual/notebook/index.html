@@ -72,6 +72,14 @@
                         <span class="step-title">Latent Space</span>
                     </div>
                 </div>
+                <div class="step-item" data-step="8">
+                    <div class="step-indicator">
+                        <span class="step-number">8</span>
+                    </div>
+                    <div class="step-content-wrapper">
+                        <span class="step-title">Quantitative Evaluation</span>
+                    </div>
+                </div>
             </div>
             <!-- Sidebar Footer with Run All and Reset buttons -->
             <div class="sidebar-footer">
@@ -276,7 +284,9 @@ test_loader = DataLoader(test_data, batch_size=<span class="number">128</span>, 
         out = <span class="keyword">self</span>.decoder(z)
         <span class="comment"># Reshape output back to image dimensions if necessary for your loss function</span>
         <span class="comment"># out = out.view(-1, 1, 28, 28)</span>
-        <span class="keyword">return</span> out, z</code></pre>
+        <span class="keyword">return</span> out, z
+
+<span class="builtin">print</span>(<span class="string">"Model architecture defined successfully!"</span>)</code></pre>
                         </div>
                         <button class="run-btn">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -289,8 +299,7 @@ test_loader = DataLoader(test_data, batch_size=<span class="number">128</span>, 
                         <div class="output-box">
                             <div id="output-3" style="display: none;">
                                 <div class="output-text">
-                                    Model architecture defined successfully!<br>
-                                    Total parameters: 1,071,554
+                                    Model architecture defined successfully!
                                 </div>
                                 <!-- Canvas removed for static Python output style -->
                             </div>
@@ -523,9 +532,7 @@ plt.grid(<span class="keyword">True</span>)
 plt.show()
 
 <span class="builtin">print</span>(<span class="string">"Latent space visualization completed!"</span>)
-
-<span class="comment"># Performance Metrics</span>
-<span class="builtin">print</span>(<span class="string">f"\nMSE: 0.026397 | PSNR: 16.41 dB | SSIM: 0.8267"</span>)</code></pre>
+</code></pre>
                         </div>
                         <button class="run-btn">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -546,34 +553,60 @@ plt.show()
                                         <div class="legend-items" id="legendItems"></div>
                                     </div>
                                 </div>
-                                <div class="metrics-table">
-                                    <h4>Performance Metrics:</h4>
-                                    <table class="results-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Metric</th>
-                                                <th>Value</th>
-                                                <th>Description</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>MSE</td>
-                                                <td>0.026397</td>
-                                                <td>Mean Squared Error</td>
-                                            </tr>
-                                            <tr>
-                                                <td>PSNR</td>
-                                                <td>16.41 dB</td>
-                                                <td>Peak Signal-to-Noise Ratio</td>
-                                            </tr>
-                                            <tr>
-                                                <td>SSIM</td>
-                                                <td>0.8267</td>
-                                                <td>Structural Similarity Index</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 8: Quantitative Evaluation -->
+            <div class="step-content" id="step-8">
+                <div class="content-grid">
+                    <div class="code-panel">
+                        <div class="code-block">
+                            <pre><code>
+model.eval()
+total_mse = total_ssim = total_psnr = total_samples = <span class="number">0</span>
+
+<span class="keyword">def</span> <span class="function">calculate_ssim</span>(img1, img2):
+    C1, C2 = <span class="number">0.01</span> ** <span class="number">2</span>, <span class="number">0.03</span> ** <span class="number">2</span>
+    mu1, mu2 = img1.mean(), img2.mean()
+    sigma1_sq = ((img1 - mu1) ** <span class="number">2</span>).mean()
+    sigma2_sq = ((img2 - mu2) ** <span class="number">2</span>).mean()
+    sigma12 = ((img1 - mu1) * (img2 - mu2)).mean()
+    <span class="keyword">return</span> (((<span class="number">2</span> * mu1 * mu2 + C1) * (<span class="number">2</span> * sigma12 + C2)) /
+           ((mu1 ** <span class="number">2</span> + mu2 ** <span class="number">2</span> + C1) * (sigma1_sq + sigma2_sq + C2))).item()
+
+<span class="keyword">with</span> torch.no_grad():
+    <span class="keyword">for</span> images, _ <span class="keyword">in</span> test_loader:
+        images = images.to(device)
+        noisy = add_noise(images)
+        outputs, _ = model(noisy)
+        outputs = outputs.view_as(images)  <span class="comment"># Reshape to match images</span>
+
+        mse = ((outputs - images) ** <span class="number">2</span>).mean(dim=[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])
+        total_mse += mse.sum().item()
+        total_psnr += <span class="builtin">sum</span>(<span class="number">20</span> * torch.log10(<span class="number">1.0</span> / torch.sqrt(m)) <span class="keyword">for</span> m <span class="keyword">in</span> mse).item()
+        
+        total_ssim += <span class="builtin">sum</span>(calculate_ssim(images[i].squeeze(), outputs[i].squeeze()) 
+                             <span class="keyword">for</span> i <span class="keyword">in</span> <span class="builtin">range</span>(images.size(<span class="number">0</span>)))
+            
+        total_samples += images.size(<span class="number">0</span>)
+
+<span class="builtin">print</span>(<span class="string">f"\nMSE: {total_mse/total_samples:.6f} | PSNR: {total_psnr/total_samples:.2f} dB | SSIM: {total_ssim/total_samples:.4f}"</span>)</code></pre>
+                        </div>
+                        <button class="run-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            Run
+                        </button>
+                    </div>
+                    <div class="output-panel">
+                        <div class="output-box">
+                            <div id="output-8" style="display: none;">
+                                <div class="output-text">
+                                    MSE: 0.026800 | PSNR: 16.33 dB | SSIM: 0.8210
                                 </div>
                             </div>
                         </div>

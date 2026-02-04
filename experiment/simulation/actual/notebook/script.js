@@ -168,6 +168,12 @@ function setupRunButtons() {
     if (step7Btn) {
         step7Btn.addEventListener('click', () => runStep7());
     }
+
+    // Step 8: Quantitative Evaluation
+    const step8Btn = document.querySelector('#step-8 .run-btn');
+    if (step8Btn) {
+        step8Btn.addEventListener('click', () => runStep8());
+    }
 }
 
 function updateStepButtons() {
@@ -813,6 +819,24 @@ function runStep7() {
         btn.classList.add('completed');
         setStepComplete(7);
         markStepComplete(7);
+    }, 1500);
+}
+
+// Step 8: Quantitative Evaluation
+function runStep8() {
+    const btn = document.querySelector('#step-8 .run-btn');
+    const output = document.getElementById('output-8');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span>Running...</span>';
+    setStepRunning(8);
+
+    setTimeout(() => {
+        output.style.display = 'block';
+        btn.innerHTML = '✓ Completed';
+        btn.classList.add('completed');
+        setStepComplete(8);
+        markStepComplete(8);
     }, 1500);
 }
 

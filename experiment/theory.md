@@ -16,7 +16,7 @@ An autoencoder consists of two main parts:
 The network is trained to minimise the difference between the input and its reconstruction, forcing it to learn the most important features of the data.
 
 ![Autoencoder Architecture](images/image4.png)
-*Fig. 1: Architecture of an autoencoder showing the encoder, bottleneck (latent space), and decoder for input reconstruction.*
+*Figure 1- Denoising autoencoder (Source: Deep Learning. Ian Goodfellow, Yoshua Bengio, and Aaron Courville, MIT Press.)*
 
 **Types of Autoencoders**
 
@@ -51,8 +51,8 @@ The training process for a denoising autoencoder can be written as:
 
 As illustrated in Fig. 3, the reconstruction loss is computed by comparing the decoder's output with the original clean image. This forces the network to learn features that are resilient to noise and capture the underlying structure of the data.
 
-![Denoising Autoencoder](images/image5.png)
-*Fig. 3: Denoising autoencoder architecture showing reconstruction of clean images from noisy inputs and computation of reconstruction loss.*
+![Denoising Autoencoder](images/image4.png)
+*Figure 1- Denoising autoencoder (Source: Deep Learning. Ian Goodfellow, Yoshua Bengio, and Aaron Courville, MIT Press.)*
 
 **Latent Space Representation**
 
@@ -62,8 +62,8 @@ For visualisation purposes, a 2-dimensional latent space is often used. When the
 
 As shown in Fig. 4, similar fashion items tend to cluster together in the learned latent space, indicating that the autoencoder has learned meaningful and discriminative representations.
 
-![Latent Space Visualization](images/image7.png)
-*Fig. 4: Two-dimensional latent space visualisation of Fashion-MNIST images learned by the autoencoder, showing clustering of similar fashion categories.*
+![Latent Space Visualization](images/image5.png)
+*Figure 2- Reconstructed Image After Noise Removal (Source: Deep Learning. Ian Goodfellow, Yoshua Bengio, and Aaron Courville, MIT Press.)*
 
 **Merits of Autoencoders**
 
