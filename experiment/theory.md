@@ -32,6 +32,7 @@ The bottleneck layer forces the network to learn a compressed representation tha
 A denoising autoencoder is trained to reconstruct a clean "repaired" input from a corrupted version of it. In this case, noise is deliberately added to the input image, and the corrupted image is then fed into the autoencoder. The decoder attempts to reconstruct the original clean image rather than the noisy input.
 
 ![Figure 1](images/image4.png)
+
 *Figure 1- Denoising autoencoder*
 *(Source: Deep Learning. Ian Goodfellow, Yoshua Bengio, and Aaron Courville, MIT Press.)*
 
@@ -56,8 +57,12 @@ For visualisation purposes, a 2-dimensional latent space is often used. When the
 
 Similar fashion items tend to cluster together in the learned latent space, indicating that the autoencoder has learned meaningful and discriminative representations.
 
-![Latent Space Visualization](images/image7.png)
-*Fig. 4: Two-dimensional latent space visualisation of Fashion-MNIST images learned by the autoencoder, showing clustering of similar fashion categories.*
+![Figure 2](images/image5.png)
+
+*Figure 2- Reconstructed Image After Noise Removal*
+*(Source: Deep Learning. Ian Goodfellow, Yoshua Bengio, and Aaron Courville, MIT Press.)*
+
+The amount of vertical translation defines a coordinate along a one-dimensional manifold that traces a curved path through image space. The above plot as shown in Figure 2 shows a few points along this manifold. For visualization, we have projected the manifold into two-dimensional space using PCA. An n-dimensional manifold has an n-dimensional tangent plane at every point. This tangent plane touches the manifold exactly at that point and is oriented parallel to the surface at that point.
 
 **Merits of Autoencoders**
 
