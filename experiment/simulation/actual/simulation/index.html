@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoencoder Interactive Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/simulation.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Autoencoder Interactive Playground</h1>
+            <p>Visual exploration of autoencoder architecture and denoising capabilities</p>
+            <a href="../../index.html" class="back-link">← Back</a>
+        </header>
+
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="denoising">Denoising</button>
+            <button class="tab-btn" data-tab="pipeline">Pipeline</button>
+            <button class="tab-btn" data-tab="latent">Latent Space</button>
+        </div>
+
+        <!-- Tab 1: Denoising (Notebook-Identical) -->
+        <div class="tab-content active" id="denoising">
+            <div class="simulation-panel">
+                <h2>Noise Robustness Test</h2>
+                <p class="description">
+                    Test how well the autoencoder reconstructs images at different noise levels.
+                </p>
+
+                <!-- Controls -->
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="classSelector">Select Class:</label>
+                        <select id="classSelector" class="control-select">
+                            <option value="boot">Ankle boot</option>
+                            <option value="trouser">Trouser</option>
+                            <option value="shirt">Shirt</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="noiseSlider">
+                            Noise Level: <span id="noiseValue">0.3</span>
+                        </label>
+                        <input type="range" id="noiseSlider" class="noise-slider" min="0" max="100" value="30" step="1">
+                        <div class="noise-markers">
+                            <span>0.0</span>
+                            <span>0.25</span>
+                            <span>0.5</span>
+                            <span>0.75</span>
+                            <span>1.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reconstruction Results -->
+                <div class="reconstruction-container">
+                    <div class="image-column">
+                        <span class="image-label">Original</span>
+                        <div class="image-box">
+                            <img id="originalImage" src="../notebook/images/original.png" alt="Original">
+                        </div>
+                    </div>
+                    <div class="image-column">
+                        <span class="image-label">Noisy Input</span>
+                        <div class="image-box">
+                            <img id="noisyImage" src="../notebook/images/level2_noise_0.3_input.png" alt="Noisy Input">
+                        </div>
+                    </div>
+                    <div class="image-column">
+                        <span class="image-label">Reconstructed</span>
+                        <div class="image-box">
+                            <img id="reconstructedImage" src="../notebook/images/level2_noise_0.3_reconstructed.png"
+                                alt="Reconstructed">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="info-box">
+                    <h3>How it works:</h3>
+                    <ul>
+                        <li><strong>Original Image:</strong> The clean input image from FashionMNIST dataset (28×28
+                            pixels)</li>
+                        <li><strong>Noisy Input:</strong> Gaussian noise is added to simulate real-world imperfections
+                        </li>
+                        <li><strong>Reconstructed:</strong> The autoencoder removes noise while preserving the essential
+                            features</li>
+                        <li><strong>Observation:</strong> As noise increases, reconstruction quality decreases, but the
+                            general shape is preserved</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Animated Pipeline -->
+        <div class="tab-content" id="pipeline">
+            <div class="simulation-panel">
+                <h2>Network Architecture & Data Flow</h2>
+                <p class="description">
+                    Watch how an image flows through the autoencoder network, layer by layer.
+                </p>
+
+                <!-- Animation Controls -->
+                <div class="animation-controls">
+                    <button id="startAnimation" class="control-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z" />
+                        </svg>
+                        Start Animation
+                    </button>
+                    <button id="resetAnimation" class="control-btn secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M2.5 2v6h6M21.5 22v-6h-6" />
+                            <path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.3" />
+                        </svg>
+                        Reset
+                    </button>
+                </div>
+
+                <!-- Architecture Diagram -->
+                <div class="architecture-container">
+                    <canvas id="pipelineCanvas" width="1200" height="600"></canvas>
+                </div>
+
+                <!-- Info Box -->
+                <div class="info-box">
+                    <h3>Architecture Details:</h3>
+                    <ul>
+                        <li><strong>Input Layer (784):</strong> Flattened 28×28 pixel image</li>
+                        <li><strong>Encoder:</strong> Progressive compression through layers: 784 → 512 → 256 → 128 → 64
+                            → 32 → 16 → 8 → 4 → 2</li>
+                        <li><strong>Latent Space (2D):</strong> Compressed representation capturing essential features
+                        </li>
+                        <li><strong>Decoder:</strong> Progressive reconstruction: 2 → 4 → 8 → 16 → 32 → 64 → 128 → 256 →
+                            512 → 784</li>
+                        <li><strong>Output Layer (784):</strong> Reconstructed image reshaped to 28×28</li>
+                        <li><strong>Total Parameters:</strong> 1,071,554 trainable parameters</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Latent Space Visualization -->
+        <div class="tab-content" id="latent">
+            <div class="simulation-panel">
+                <h2>Latent Space Exploration</h2>
+                <p class="description">
+                    Explore how different fashion items are represented in the 2D latent space.
+                </p>
+
+                <!-- Latent Space Plot -->
+                <div class="latent-space-container">
+                    <div class="latent-plot">
+                        <img src="../notebook/images/latent_projection.png" alt="Latent Space Projection"
+                            class="latent-plot-img">
+                    </div>
+
+                    <div class="latent-legend">
+                        <h3>Fashion Categories:</h3>
+
+                        <!-- Horizontal Label Row -->
+                        <div class="category-labels-row">
+                            <div class="category-label-item">
+                                <div class="legend-color" style="background-color: #1f77b4;"></div>
+                                <span>0: T-shirt/top</span>
+                            </div>
+                            <div class="category-label-item">
+                                <div class="legend-color" style="background-color: #ff7f0e;"></div>
+                                <span>1: Trouser</span>
+                            </div>
+                            <div class="category-label-item">
+                                <div class="legend-color" style="background-color: #2ca02c;"></div>
+                                <span>2: Pullover</span>
+                            </div>
+                            <div class="category-label-item">
+                                <div class="legend-color" style="background-color: #d62728;"></div>
+                                <span>3: Dress</span>
+                            </div>
+                            <div class="category-label-item">
+                                <div class="legend-color" style="background-color: #9467bd;"></div>
+                                <span>4: Coat</span>
+                            </div>
+                            <div class="category-label-item">
+                                <div class="legend-color" style="background-color: #8c564b;"></div>
+                                <span>5: Sandal</span>
+                            </div>
+                            <div class="category-label-item">
+                                <div class="legend-color" style="background-color: #e377c2;"></div>
+                                <span>6: Shirt</span>
+                            </div>
+                            <div class="category-label-item">
+                                <div class="legend-color" style="background-color: #7f7f7f;"></div>
+                                <span>7: Sneaker</span>
+                            </div>
+                            <div class="category-label-item">
+                                <div class="legend-color" style="background-color: #bcbd22;"></div>
+                                <span>8: Bag</span>
+                            </div>
+                            <div class="category-label-item">
+                                <div class="legend-color" style="background-color: #17becf;"></div>
+                                <span>9: Ankle boot</span>
+                            </div>
+                        </div>
+
+                        <!-- Image Grid -->
+                        <div class="category-images-grid">
+                            <div class="category-image-item" data-category="0">
+                                <img src="../notebook/images/class1_T-shirt_top.png" alt="T-shirt/top"
+                                    style="border-color: #1f77b4;">
+                            </div>
+                            <div class="category-image-item" data-category="1">
+                                <img src="../notebook/images/class2_Trouser.png" alt="Trouser"
+                                    style="border-color: #ff7f0e;">
+                            </div>
+                            <div class="category-image-item" data-category="2">
+                                <img src="../notebook/images/class3_Pullover.png" alt="Pullover"
+                                    style="border-color: #2ca02c;">
+                            </div>
+                            <div class="category-image-item" data-category="3">
+                                <img src="../notebook/images/class4_Dress.png" alt="Dress"
+                                    style="border-color: #d62728;">
+                            </div>
+                            <div class="category-image-item" data-category="4">
+                                <img src="../notebook/images/class5_Coat.png" alt="Coat" style="border-color: #9467bd;">
+                            </div>
+                            <div class="category-image-item" data-category="5">
+                                <img src="../notebook/images/class6_Sandal.png" alt="Sandal"
+                                    style="border-color: #8c564b;">
+                            </div>
+                            <div class="category-image-item" data-category="6">
+                                <img src="../notebook/images/class7_Shirt.png" alt="Shirt"
+                                    style="border-color: #e377c2;">
+                            </div>
+                            <div class="category-image-item" data-category="7">
+                                <img src="../notebook/images/class8_Sneaker.png" alt="Sneaker"
+                                    style="border-color: #7f7f7f;">
+                            </div>
+                            <div class="category-image-item" data-category="8">
+                                <img src="../notebook/images/class9_Bag.png" alt="Bag" style="border-color: #bcbd22;">
+                            </div>
+                            <div class="category-image-item" data-category="9">
+                                <img src="../notebook/images/class10_Ankle_boot.png" alt="Ankle boot"
+                                    style="border-color: #17becf;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="info-box">
+                    <h3>Understanding Latent Space:</h3>
+                    <ul>
+                        <li><strong>Dimensionality Reduction:</strong> The autoencoder compresses 784-dimensional images
+                            into just 2 dimensions</li>
+                        <li><strong>Clustering:</strong> Similar items (e.g., shoes, clothing) tend to cluster together
+                            in latent space</li>
+                        <li><strong>Continuous Representation:</strong> Points close together represent similar visual
+                            features</li>
+                        <li><strong>Learning:</strong> The network learns this representation without explicit labels
+                            for features</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/simulation.js"></script>
+</body>
+
+</html>
