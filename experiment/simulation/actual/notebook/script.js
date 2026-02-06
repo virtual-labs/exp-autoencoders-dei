@@ -204,13 +204,17 @@ function updateStepButtons() {
 
         // Check if previous step is completed (Step 1 is always unlocked)
         const isUnlocked = stepNum === 1 || appState.completedSteps.includes(stepNum - 1);
+        const isCompleted = appState.completedSteps.includes(stepNum);
 
         if (isUnlocked) {
             content.classList.remove('locked');
             if (runBtn) {
-                // Only enable if not currently running or completed (unless we want to allow re-run)
-                // For simple logic: Enable if unlocked.
-                if (!runBtn.classList.contains('running')) {
+                // If step is completed, keep button disabled
+                // If step is running, keep it disabled
+                // Otherwise enable it
+                if (isCompleted || runBtn.classList.contains('running') || runBtn.classList.contains('completed')) {
+                    runBtn.disabled = true;
+                } else {
                     runBtn.disabled = false;
                 }
             }
@@ -221,7 +225,7 @@ function updateStepButtons() {
             }
         }
 
-        if (appState.completedSteps.includes(stepNum)) {
+        if (isCompleted) {
             content.classList.add('completed');
         }
     });
@@ -276,7 +280,7 @@ function runStep1() {
         output.style.display = 'block';
         btn.innerHTML = '✓ Completed';
         btn.classList.add('completed');
-        btn.disabled = false;
+        btn.disabled = true; // Keep disabled after completion
         setStepComplete(1);
         markStepComplete(1);
 
@@ -303,7 +307,7 @@ function runStep2() {
         output.style.display = 'block';
         btn.innerHTML = '✓ Completed';
         btn.classList.add('completed');
-        btn.disabled = false; // Re-enable button so it can be re-run if needed
+        btn.disabled = true; // Keep disabled after completion
         setStepComplete(2);
         markStepComplete(2);
 
@@ -373,7 +377,7 @@ function runStep3() {
         output.style.display = 'block';
         btn.innerHTML = '✓ Completed';
         btn.classList.add('completed');
-        btn.disabled = false;
+        btn.disabled = true; // Keep disabled after completion
         setStepComplete(3);
         markStepComplete(3);
 
@@ -587,7 +591,7 @@ function simulateTraining() {
             const btn = document.querySelector('#step-4 .run-btn');
             btn.innerHTML = '✓ Completed';
             btn.classList.add('completed');
-            btn.disabled = false;
+            btn.disabled = true; // Keep disabled after completion
             setStepComplete(4);
             markStepComplete(4);
 
@@ -645,6 +649,7 @@ function runStep5() {
         output.style.display = 'block';
         btn.innerHTML = '✓ Completed';
         btn.classList.add('completed');
+        btn.disabled = true; // Keep disabled after completion
         setStepComplete(5);
         markStepComplete(5);
 
@@ -670,6 +675,7 @@ function runStep6() {
         output.style.display = 'block';
         btn.innerHTML = '✓ Completed';
         btn.classList.add('completed');
+        btn.disabled = true; // Keep disabled after completion
         setStepComplete(6);
         markStepComplete(6);
 
@@ -817,6 +823,7 @@ function runStep7() {
         output.style.display = 'block';
         btn.innerHTML = '✓ Completed';
         btn.classList.add('completed');
+        btn.disabled = true; // Keep disabled after completion
         setStepComplete(7);
         markStepComplete(7);
     }, 1500);
@@ -835,6 +842,7 @@ function runStep8() {
         output.style.display = 'block';
         btn.innerHTML = '✓ Completed';
         btn.classList.add('completed');
+        btn.disabled = true; // Keep disabled after completion
         setStepComplete(8);
         markStepComplete(8);
     }, 1500);

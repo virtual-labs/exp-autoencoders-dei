@@ -472,6 +472,13 @@ body {
     color: var(--text-primary);
 }
 
+.run-btn.completed {
+    background: #6c757d;
+    color: #ffffff;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
 /* Code Block - Gray background */
 .cell-code {
     background: #2d2d2d;

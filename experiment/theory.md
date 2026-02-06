@@ -30,16 +30,16 @@ A denoising autoencoder is trained to reconstruct a clean "repaired" input from 
 
 ![Figure 1](images/image4.png)
 
-*Figure 1- Denoising autoencoder*
+*Figure 1- Denoising autoencoder*  
 *(Source: Deep Learning. Ian Goodfellow, Yoshua Bengio, and Aaron Courville, MIT Press.)*
 
 A denoising autoencoder is trained to map a corrupted data point x' back to the original data point x as shown in Figure 1. We illustrate training examples x as red crosses lying near a low-dimensional manifold illustrated with the bold black line. We illustrate the corruption process C (x' | x) with a gray circle of equiprobable corruption. A gray arrow demonstrates how one training example is transformed into one sample from this corruption process.
 
 The training process for a denoising autoencoder can be written as:
 
-1. Input: ![](images/image1.png) where **n** is random noise
-2. Target: ![](images/image2.png) (clean image)
-3. Loss: ![](images/image3.png)
+1. Input: x̃ = x + n · x where **n** is random noise
+2. Target: x (clean image)
+3. Loss: L(x, g(f(x̃)))
 
 The reconstruction loss is computed by comparing the decoder's output with the original clean image. This forces the network to learn features that are resilient to noise and capture the underlying structure of the data.
 
@@ -53,7 +53,7 @@ Similar fashion items tend to cluster together in the learned latent space, indi
 
 ![Figure 2](images/image5.png)
 
-*Figure 2- Reconstructed Image After Noise Removal*
+*Figure 2- Reconstructed Image After Noise Removal*  
 *(Source: Deep Learning. Ian Goodfellow, Yoshua Bengio, and Aaron Courville, MIT Press.)*
 
 The amount of vertical translation defines a coordinate along a one-dimensional manifold that traces a curved path through image space. The above plot as shown in Figure 2 shows a few points along this manifold. For visualization, we have projected the manifold into two-dimensional space using PCA. An n-dimensional manifold has an n-dimensional tangent plane at every point. This tangent plane touches the manifold exactly at that point and is oriented parallel to the surface at that point.
