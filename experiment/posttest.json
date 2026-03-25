@@ -2,7 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "After training, what does the encoder of an autoencoder produce?",
+      "question": "1. After training, what does the encoder of an autoencoder produce?",
       "answers": {
         "a": "A compressed latent representation of the input",
         "b": "The final classification label",
@@ -19,7 +19,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "In the denoising autoencoder experiment, what should the target output be?",
+      "question": "2. In the denoising autoencoder experiment, what should the target output be?",
       "answers": {
         "a": "The noisy input image",
         "b": "A completely different image",
@@ -36,7 +36,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What type of noise is added to images when training the denoising autoencoder?",
+      "question": "3. What type of noise is added to images when training the denoising autoencoder?",
       "answers": {
         "a": "Salt-and-pepper noise only",
         "b": "Gaussian noise",
@@ -53,7 +53,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "If reconstruction loss decreases during training, it indicates:",
+      "question": "4. If reconstruction loss decreases during training, it indicates:",
       "answers": {
         "a": "The model is learning to better reconstruct inputs",
         "b": "The model is overfitting severely",
@@ -70,7 +70,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What activation function is used in the final decoder layer?",
+      "question": "5. What activation function is used in the final decoder layer?",
       "answers": {
         "a": "ReLU",
         "b": "Tanh",
@@ -87,7 +87,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "When visualising the latent space, what does clustering of similar items indicate?",
+      "question": "6. When visualising the latent space, what does clustering of similar items indicate?",
       "answers": {
         "a": "The model failed to learn",
         "b": "The autoencoder has learned meaningful representations that group similar items together",
@@ -104,7 +104,7 @@
       "difficulty": "intermediate"
     },
     {
-      "question": "What does the bottleneck layer force the autoencoder to learn?",
+      "question": "7. What does the bottleneck layer force the autoencoder to learn?",
       "answers": {
         "a": "How to add more noise to images",
         "b": "Only the pixel colours of images",
@@ -121,7 +121,7 @@
       "difficulty": "intermediate"
     },
     {
-      "question": "Why is batch normalisation used in the autoencoder architecture?",
+      "question": "8. Why is batch normalisation used in the autoencoder architecture?",
       "answers": {
         "a": "To reduce the number of training epochs to zero",
         "b": "To stabilise training by normalising layer inputs and reducing internal covariate shift",
@@ -138,7 +138,7 @@
       "difficulty": "intermediate"
     },
     {
-      "question": "What does PSNR (Peak Signal-to-Noise Ratio) measure?",
+      "question": "9. What does PSNR (Peak Signal-to-Noise Ratio) measure?",
       "answers": {
         "a": "Training speed",
         "b": "Reconstruction quality in decibels, with higher values indicating better quality",
@@ -155,7 +155,7 @@
       "difficulty": "intermediate"
     },
     {
-      "question": "If the autoencoder reconstructs training images perfectly but performs poorly on test images, what problem is occurring?",
+      "question": "10. If the autoencoder reconstructs training images perfectly but performs poorly on test images, what problem is occurring?",
       "answers": {
         "a": "Underfitting",
         "b": "The latent dimension is too small",

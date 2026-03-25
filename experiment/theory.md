@@ -37,9 +37,9 @@ A denoising autoencoder is trained to map a corrupted data point x' back to the 
 
 The training process for a denoising autoencoder can be written as:
 
-1. Input: x̃ = x + n · x where **n** is random noise
-2. Target: x (clean image)
-3. Loss: L(x, g(f(x̃)))
+1. **Corrupted input:** $\tilde{x} = x + n \cdot x$, where $n$ is random noise sampled from $\mathcal{N}(0, \sigma^2)$
+2. **Target:** $x$ (the original clean image)
+3. **Reconstruction loss:** $\mathcal{L}(x,\, g(f(\tilde{x}))) = \|x - g(f(\tilde{x}))\|^2$
 
 The reconstruction loss is computed by comparing the decoder's output with the original clean image. This forces the network to learn features that are resilient to noise and capture the underlying structure of the data.
 
@@ -55,8 +55,6 @@ Similar fashion items tend to cluster together in the learned latent space, indi
 
 *Figure 2- Reconstructed Image After Noise Removal*  
 *(Source: Deep Learning. Ian Goodfellow, Yoshua Bengio, and Aaron Courville, MIT Press.)*
-
-The amount of vertical translation defines a coordinate along a one-dimensional manifold that traces a curved path through image space. The above plot as shown in Figure 2 shows a few points along this manifold. For visualization, we have projected the manifold into two-dimensional space using PCA. An n-dimensional manifold has an n-dimensional tangent plane at every point. This tangent plane touches the manifold exactly at that point and is oriented parallel to the surface at that point.
 
 **Merits of Autoencoders**
 

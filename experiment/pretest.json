@@ -2,7 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "What is the primary objective of an autoencoder?",
+      "question": "1. What is the primary objective of an autoencoder?",
       "answers": {
         "a": "To classify images into different categories",
         "b": "To learn a compressed representation by reconstructing input data",
@@ -19,7 +19,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "Which component of an autoencoder compresses the input into a lower-dimensional representation?",
+      "question": "2. Which component of an autoencoder compresses the input into a lower-dimensional representation?",
       "answers": {
         "a": "Decoder",
         "b": "Classifier",
@@ -36,7 +36,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What is the bottleneck layer in an autoencoder?",
+      "question": "3. What is the bottleneck layer in an autoencoder?",
       "answers": {
         "a": "The layer with the smallest dimension that holds the compressed representation",
         "b": "The input layer with maximum dimensions",
@@ -53,7 +53,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "In a denoising autoencoder, what is used as input during training?",
+      "question": "4. In a denoising autoencoder, what is used as input during training?",
       "answers": {
         "a": "Clean images only",
         "b": "Noisy or corrupted images",
@@ -70,7 +70,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What type of learning paradigm do autoencoders belong to?",
+      "question": "5. What type of learning paradigm do autoencoders belong to?",
       "answers": {
         "a": "Supervised learning",
         "b": "Reinforcement learning",
@@ -87,7 +87,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What loss function is typically used to train autoencoders?",
+      "question": "6. What loss function is typically used to train autoencoders?",
       "answers": {
         "a": "Cross-entropy loss",
         "b": "Hinge loss",
@@ -104,16 +104,16 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What is the size of each image in the Fashion-MNIST dataset?",
+      "question": "7. What is the size of each image in the Fashion-MNIST dataset?",
       "answers": {
-        "a": "32×32 pixels",
-        "b": "28×28 pixels",
-        "c": "64×64 pixels",
-        "d": "224×224 pixels"
+        "a": "32\u00d732 pixels",
+        "b": "28\u00d728 pixels",
+        "c": "64\u00d764 pixels",
+        "d": "224\u00d7224 pixels"
       },
       "explanations": {
-        "a": "Incorrect because CIFAR-10 uses 32×32, not Fashion-MNIST.",
-        "b": "Correct because Fashion-MNIST images are 28×28 grayscale.",
+        "a": "Incorrect because CIFAR-10 uses 32\u00d732, not Fashion-MNIST.",
+        "b": "Correct because Fashion-MNIST images are 28\u00d728 grayscale.",
         "c": "Incorrect because Fashion-MNIST uses smaller images.",
         "d": "Incorrect because this is the size for ImageNet, not Fashion-MNIST."
       },
@@ -121,7 +121,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What advantage does a 2-D latent space provide in autoencoders?",
+      "question": "8. What advantage does a 2-D latent space provide in autoencoders?",
       "answers": {
         "a": "Faster training speed",
         "b": "Better reconstruction quality always",
@@ -138,7 +138,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "What happens if the bottleneck dimension is too small in an autoencoder?",
+      "question": "9. What happens if the bottleneck dimension is too small in an autoencoder?",
       "answers": {
         "a": "The model may fail to capture important features, leading to poor reconstruction",
         "b": "Training becomes faster",
@@ -155,7 +155,7 @@
       "difficulty": "intermediate"
     },
     {
-      "question": "What is the main advantage of using autoencoders over supervised learning methods for feature extraction?",
+      "question": "10. What is the main advantage of using autoencoders over supervised learning methods for feature extraction?",
       "answers": {
         "a": "Autoencoders always achieve 100% accuracy",
         "b": "Autoencoders do not require labelled data and can learn representations from raw data alone",

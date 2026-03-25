@@ -73,16 +73,13 @@ function initializeDenoisingControls() {
         noiseSlider.value = state.currentNoise * 100;
         noiseValue.textContent = state.currentNoise.toFixed(2);
 
-        // Update on input (real-time)
+        // Update display in real-time while dragging (smooth)
         noiseSlider.addEventListener('input', (e) => {
             const rawValue = e.target.value / 100;
-            const snappedValue = snapToNearestNoiseLevel(rawValue);
-            noiseValue.textContent = snappedValue.toFixed(2);
-            state.currentNoise = snappedValue;
-            updateNoiseImages(snappedValue, state.currentClass);
+            noiseValue.textContent = rawValue.toFixed(2);
         });
 
-        // Snap to discrete level on release
+        // Snap to nearest discrete level on release and update images
         noiseSlider.addEventListener('change', (e) => {
             const rawValue = e.target.value / 100;
             const snappedValue = snapToNearestNoiseLevel(rawValue);
