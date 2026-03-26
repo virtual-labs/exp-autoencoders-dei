@@ -37,9 +37,14 @@ A denoising autoencoder is trained to map a corrupted data point x' back to the 
 
 The training process for a denoising autoencoder can be written as:
 
-1. **Corrupted input:** $\tilde{x} = x + n \cdot x$, where $n$ is random noise sampled from $\mathcal{N}(0, \sigma^2)$
+1. **Corrupted input:** Add random noise $n \sim \mathcal{N}(0, \sigma^2)$ to produce:
+
+$$\tilde{x} = x + n \cdot x$$
+
 2. **Target:** $x$ (the original clean image)
-3. **Reconstruction loss:** $\mathcal{L}(x,\, g(f(\tilde{x}))) = \|x - g(f(\tilde{x}))\|^2$
+3. **Reconstruction loss:**
+
+$$\mathcal{L}(x,\, g(f(\tilde{x}))) = \|x - g(f(\tilde{x}))\|^2$$
 
 The reconstruction loss is computed by comparing the decoder's output with the original clean image. This forces the network to learn features that are resilient to noise and capture the underlying structure of the data.
 
