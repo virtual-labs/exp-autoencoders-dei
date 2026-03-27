@@ -196,6 +196,7 @@ body {
     background: linear-gradient(to right, #e9ecef 0%, #495057 100%);
     outline: none;
     -webkit-appearance: none;
+    appearance: none;
 }
 
 .noise-slider::-webkit-slider-thumb {
@@ -325,23 +326,259 @@ body {
 }
 
 /* ===================================
-   ARCHITECTURE CONTAINER (PIPELINE TAB)
+   PIPELINE FLOW — DUAL-ROW LAYOUT
    =================================== */
-.architecture-container {
-    margin-bottom: 2rem;
-    padding: 2rem;
+
+.pipeline-flow-container {
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 1rem 1rem;
     background: #f8f9fa;
     border-radius: 6px;
     border: 1px solid var(--border-color);
-    display: flex;
-    justify-content: center;
-    overflow-x: auto;
+    overflow-x: hidden; /* NO horizontal scrollbar */
 }
 
-#pipelineCanvas {
-    max-width: 100%;
-    height: auto;
+#pipelineFlow {
+    width: 100%;
 }
+
+/* ── Main Grid Layout ── */
+.pgrid {
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr) auto minmax(100px, 1fr);
+    grid-template-rows: auto auto auto;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1rem;
+    row-gap: 1.25rem;
+    margin: 1.5rem auto;
+    max-width: 100%;
+}
+
+/* ── Grid Cell Assignments ── */
+.pgrid-in { grid-column: 1; grid-row: 1; display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem; }
+.pgrid-enc { grid-column: 2; grid-row: 1; max-width: 100%; }
+.pgrid-center-block { grid-column: 2; grid-row: 2; justify-self: center; }
+.pgrid-dec { grid-column: 2; grid-row: 3; max-width: 100%; }
+.pgrid-out { grid-column: 3; grid-row: 3; display: flex; align-items: center; justify-content: flex-start; gap: 0.5rem; }
+
+/* ── Block Containers ── */
+.pgrid-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8f9fa;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    width: 100%;
+}
+
+.pgrid-center-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+    background: #f8f9fa;
+    padding: 1rem 2rem;
+    border-radius: 16px;
+    border: 1px solid #e9ecef;
+}
+
+/* ── Elements ── */
+.pnode {
+    width: 48px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #fff;
+    cursor: help;
+    user-select: none;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    position: relative;
+    box-shadow: none;
+    border: none;
+    flex-shrink: 0;
+}
+.pnode--green { background: #198754; }
+.pnode--blue  { background: #0d6efd; }
+.pnode--red   { background: #dc3545; }
+
+.pnode.layer-active {
+    background: #f59e0b !important;
+    color: #fff;
+    transform: scale(1.15);
+}
+.pnode.layer-done {
+    opacity: 0.8;
+}
+
+/* ── Arrows ── */
+.parr {
+    width: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ced4da;
+    margin: 0 4px;
+    transition: color 0.3s ease;
+    flex-shrink: 1;
+}
+.parr svg { width: 100%; height: auto; }
+.parr.arrow-active {
+    color: #f59e0b;
+    filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.6));
+}
+
+/* ── Images ── */
+.pimg-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: opacity 0.4s ease;
+}
+.pimg-lbl {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #495057;
+}
+.pimg-frame {
+    width: 110px;
+    height: 110px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 2px solid #e9ecef;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.4s, box-shadow 0.4s;
+    position: relative;
+    flex-shrink: 0;
+}
+.pimg-frame img {
+    width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; transition: opacity 0.6s ease;
+}
+
+/* Active frames */
+.pimg-wrap.img-processing .pimg-frame {
+    border-color: #f59e0b;
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
+}
+
+/* Output Initial Empty Box */
+.img-idle .pimg-frame { background: #f8f9fa; border: 2.5px dashed #ced4da; box-shadow: none; }
+.img-idle .pimg-frame::after {
+    content: 'OUTPUT';
+    font-size: 0.9rem; font-weight: 800; color: #adb5bd; letter-spacing: 0.05em;
+    position: absolute; z-index: 2;
+}
+.img-idle img { opacity: 0; }
+.img-hidden { opacity: 0; }
+.img-visible { opacity: 1; }
+.img-initial { opacity: 1; }
+
+/* ── Live Panel & Latent ── */
+.live-data-panel {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transition: filter 0.3s;
+}
+.live-data-panel.panel-active canvas {
+    border-color: #f59e0b;
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
+}
+.live-data-title {
+    font-size: 0.8rem; font-weight: 800; color: #495057; text-transform: uppercase; margin-bottom: 0.85rem;
+}
+#live-data-canvas {
+    width: 125px; height: 125px; image-rendering: pixelated; 
+    background: #fff; border: 2px solid #ced4da; border-radius: 8px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.pdual-latent-card {
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    padding: 0; border: none; background: transparent; box-shadow: none; cursor: help;
+}
+.pdual-latent-card.layer-active .pnode {
+    transform: scale(1.15); box-shadow: 0 0 20px rgba(220,53,69,0.5); border: 2px solid #ff4d4d;
+}
+.pdual-lat-title { font-size: 0.8rem; font-weight: 800; color: #dc3545; text-transform: uppercase; }
+.pdual-lat-sub { font-size: 0.7rem; color: #888; }
+
+/* ── Idle Animation ── */
+.pipeline-idle .parr { animation: flowPulse 2.5s infinite ease-in-out; }
+@keyframes flowPulse {
+    0%, 100% { color: #d1d5db; opacity: 0.4; filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
+    50% { color: #fcf1ce; opacity: 1; filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.4)); }
+}
+.pipeline-idle .pnode, .pipeline-idle .pimg-wrap { opacity: 0.8; filter: saturate(0.8); }
+
+/* ── Hover tooltips ── */
+.pnode[data-tip]:hover::after, .pdual-latent-card[data-tip]:hover::after {
+    content: attr(data-tip); position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%); background: #111; color: #fff; font-size: 0.68rem;
+    padding: 7px 11px; border-radius: 5px; white-space: pre; z-index: 100; pointer-events: none;
+}
+.pnode[data-tip]:hover::before, .pdual-latent-card[data-tip]:hover::before {
+    content: ''; position: absolute; bottom: calc(100% + 4px); left: 50%;
+    transform: translateX(-50%); border: 4px solid transparent; border-top-color: #111; z-index: 100;
+}
+
+/* ── Responsive Scaling ── */
+@media (max-width: 1200px) {
+    .pgrid { column-gap: 0.5rem; row-gap: 0.75rem; }
+    .pgrid-block { padding: 0.5rem 0.5rem; }
+    .pnode { width: 38px; height: 42px; font-size: 0.85rem; }
+    .parr { margin: 0 2px; }
+    .pimg-frame { width: 90px; height: 90px; }
+    #live-data-canvas { width: 100px; height: 100px; }
+    .pgrid-center-block { gap: 1rem; padding: 0.75rem 1rem; }
+}
+
+@media (max-width: 900px) {
+    .pgrid { column-gap: 0.25rem; row-gap: 0.5rem; }
+    .pnode { width: 32px; height: 36px; font-size: 0.75rem; border-radius: 4px; }
+    .pimg-frame { width: 75px; height: 75px; }
+    #live-data-canvas { width: 85px; height: 85px; }
+    .pgrid-center-block { gap: 0.5rem; padding: 0.5rem; }
+    .pdual-lat-title { font-size: 0.65rem; }
+    .pdual-lat-sub { display: none; }
+}
+
+/* ── Colour legend ── */
+.pipe-legend {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+}
+
+.pipe-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-secondary);
+}
+
+.pipe-legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
 
 /* ===================================
    LATENT SPACE VISUALIZATION

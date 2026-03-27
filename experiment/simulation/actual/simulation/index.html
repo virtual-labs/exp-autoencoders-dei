@@ -104,9 +104,9 @@
         <!-- Tab 2: Animated Pipeline -->
         <div class="tab-content" id="pipeline">
             <div class="simulation-panel">
-                <h2>Network Architecture & Data Flow</h2>
+                <h2>End-to-End Compression &amp; Reconstruction Pipeline</h2>
                 <p class="description">
-                    Watch how an image flows through the autoencoder network, layer by layer.
+                    The full autoencoder data flow in a single view — from raw input image, through progressive compression in the encoder, to the 2D latent space, through reconstruction in the decoder, to the final output image. Press <strong>Start Animation</strong> to watch the process unfold layer by layer.
                 </p>
 
                 <!-- Animation Controls -->
@@ -127,24 +127,40 @@
                     </button>
                 </div>
 
-                <!-- Architecture Diagram -->
-                <div class="architecture-container">
-                    <canvas id="pipelineCanvas" width="1200" height="600"></canvas>
+                <!-- Single Continuous Pipeline Flow -->
+                <div class="pipeline-flow-container">
+                    <div id="pipelineFlow" class="pipeline-flow"></div>
+                </div>
+
+                <!-- Colour Legend -->
+                <div class="pipe-legend">
+                    <div class="pipe-legend-item">
+                        <div class="pipe-legend-dot" style="background:#198754;"></div>
+                        <span>Input / Output (784)</span>
+                    </div>
+                    <div class="pipe-legend-item">
+                        <div class="pipe-legend-dot" style="background:#0d6efd;"></div>
+                        <span>Hidden Layers</span>
+                    </div>
+                    <div class="pipe-legend-item">
+                        <div class="pipe-legend-dot" style="background:#dc3545;"></div>
+                        <span>Latent Space (2D)</span>
+                    </div>
+                    <div class="pipe-legend-item">
+                        <div class="pipe-legend-dot" style="background:#f59e0b;"></div>
+                        <span>Active Layer</span>
+                    </div>
                 </div>
 
                 <!-- Info Box -->
-                <div class="info-box">
-                    <h3>Architecture Details:</h3>
+                <div class="info-box" style="margin-top:1.5rem;">
+                    <h3>How the pipeline works:</h3>
                     <ul>
-                        <li><strong>Input Layer (784):</strong> Flattened 28×28 pixel image</li>
-                        <li><strong>Encoder:</strong> Progressive compression through layers: 784 → 512 → 256 → 128 → 64
-                            → 32 → 16 → 8 → 4 → 2</li>
-                        <li><strong>Latent Space (2D):</strong> Compressed representation capturing essential features
-                        </li>
-                        <li><strong>Decoder:</strong> Progressive reconstruction: 2 → 4 → 8 → 16 → 32 → 64 → 128 → 256 →
-                            512 → 784</li>
-                        <li><strong>Output Layer (784):</strong> Reconstructed image reshaped to 28×28</li>
-                        <li><strong>Total Parameters:</strong> 1,071,554 trainable parameters</li>
+                        <li><strong>Input Image:</strong> A 28×28 FashionMNIST image (784 values) enters the encoder.</li>
+                        <li><strong>Encoder (Compression):</strong> Progressively reduces dimensions — 784 → 512 → 256 → 128 → 64 → 32 → 16 → 8 → 4 → 2</li>
+                        <li><strong>Latent Space (2D):</strong> The entire image is compressed to just 2 numbers — the bottleneck.</li>
+                        <li><strong>Decoder (Reconstruction):</strong> Progressively expands back — 2 → 4 → 8 → 16 → 32 → 64 → 128 → 256 → 512 → 784</li>
+                        <li><strong>Output Image:</strong> The reconstructed 28×28 image, reshaped from the decoder's 784-value output.</li>
                     </ul>
                 </div>
             </div>
