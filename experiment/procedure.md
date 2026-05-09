@@ -29,9 +29,15 @@ This dataset is commonly used for testing machine learning algorithms because it
 
 Convert images to tensors with pixel values normalised to [0, 1]. For denoising, define a noise addition function that adds Gaussian noise (noise factor = 0.25) while keeping targets clean.
 
-**Step 4: Define Autoencoder Architecture**
+**Step 4: Define the Basic Autoencoder Architecture**
 
-Build an improved autoencoder with:
+Build a fully connected autoencoder with:
+
+* **Encoder:** flatten the 28×28 input into 784 features and compress it through multiple dense layers to a 2-dimensional latent vector
+* **Decoder:** expand the 2-dimensional latent vector back to 784 features and reshape it to 28×28
+* Use ReLU in the hidden layers and Sigmoid in the final output layer
+
+The basic autoencoder is trained on clean images so that it learns to reconstruct the input without noise removal.
 
 **Encoder:**
 

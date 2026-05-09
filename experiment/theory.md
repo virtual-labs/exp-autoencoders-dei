@@ -24,22 +24,16 @@ The bottleneck layer forces the network to learn a compressed representation tha
 
 **Denoising Autoencoder:**
 
-> *"A denoising autoencoder is trained to reconstruct a clean 'repaired' input from a corrupted version of it."*
->
-> - Vincent et al., ICML 2008
-
-A denoising autoencoder is trained to reconstruct a clean "repaired" input from a corrupted version of it. In this case, noise is deliberately added to the input image, and the corrupted image is then fed into the autoencoder. The decoder attempts to reconstruct the original clean image rather than the noisy input.
+A denoising autoencoder is trained to reconstruct a clean image from a corrupted version of the same image. If the clean input is represented as $x$, then the noisy input can be written as: $\tilde{x} = x + n$ where $n$ is random noise. The noisy image $\tilde{x}$ is given as input to the model, but the target output remains the original clean image $x$. The model learns to remove the noise and recover the underlying structure of the image. This helps the autoencoder learn features that are robust to corruption and useful for practical reconstruction tasks.
 
 ![Figure 1](images/image4.png)
 
 *Figure 1-  Denoising autoencoder*
 *(Source: Deep Learning. Ian Goodfellow, Yoshua Bengio, and Aaron Courville, MIT Press.)*
 
-A denoising autoencoder is trained to map a corrupted data point $\tilde{x}$ back to the original data point $x$. We illustrate training examples $x$ as red crosses lying near a low-dimensional manifold illustrated with the bold black line. We illustrate the corruption process $C\left(\tilde{x} \mid x\right)$ with a gray circle of equiprobable corruptions. A gray arrow demonstrates how one training example is transformed into one sample from this corruption process.
-
 The training process for a denoising autoencoder can be written as:
 
-* **Input:** $\tilde{x} = x + nx$, where **n** is random noise
+* **Input:** $\tilde{x}$ (noisy image)
 
 * **Target:** $x$ (clean image)
 
@@ -49,16 +43,11 @@ The reconstruction loss is computed by comparing the decoder's output with the o
 
 **Latent Space Representation:**
 
-Latent space (bottleneck layer) is the compressed representation learned by the encoder. This compression enables autoencoders to learn hierarchical representations of data.
+The latent space (bottleneck layer) is the compressed representation learned by the encoder. It is the stacked layers in the encoder, its depth, that enable autoencoders to learn hierarchical representations of data, where early layers capture low-level features (such as edges and textures) and deeper layers capture increasingly abstract patterns. The bottleneck itself plays a separate but equally important role: by constraining the dimensionality, it forces the network to retain only the most essential information and discard redundancy.
 
-For visualisation purposes, a 2-dimensional latent space is often used. When the latent dimension is 2, the encoded representations of input images can be directly plotted to observe how the autoencoder organises different patterns in the data.
+For visualisation purposes, a 2-dimensional latent space is often used. When the latent dimension is 2, the encoded representations of input images can be directly plotted as a scatter plot to observe how the autoencoder organises different patterns in the data.
 
 Similar fashion items tend to cluster together in the learned latent space, indicating that the autoencoder has learned meaningful and discriminative representations.
-
-![Figure 2](images/image5.png)
-
-*Figure 2-  Reconstructed Image After Noise Removal*
-*(Source: Deep Learning. Ian Goodfellow, Yoshua Bengio, and Aaron Courville, MIT Press.)*
 
 **Fashion-MNIST Dataset**
 

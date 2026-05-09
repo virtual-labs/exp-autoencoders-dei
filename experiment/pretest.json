@@ -70,24 +70,24 @@
       "difficulty": "beginner"
     },
     {
-      "question": "5. What type of learning paradigm do autoencoders belong to?",
+      "question": "5. Autoencoders are increasingly described in modern deep learning literature as which type of learning, since the supervision signal is derived from the input itself?",
       "answers": {
         "a": "Supervised learning",
         "b": "Reinforcement learning",
-        "c": "Unsupervised learning",
+        "c": "Self-Supervised",
         "d": "Semi-supervised learning"
       },
       "explanations": {
-        "a": "Incorrect because autoencoders do not require labelled data.",
-        "b": "Incorrect because reinforcement learning involves rewards and actions.",
-        "c": "Correct because autoencoders learn patterns without labels.",
-        "d": "Incorrect because semi-supervised uses some labels, autoencoders use none."
+        "a": "Incorrect because supervised learning requires externally provided labels or target outputs, whereas autoencoders use the input itself as the reconstruction target.",
+        "b": "Incorrect because reinforcement learning involves agents learning through rewards and environment interactions, which is unrelated to autoencoder training.",
+        "c": "Correct because autoencoders generate their own supervision signal by using the input as the target output. The model learns to reconstruct the original input from a compressed or corrupted representation, which is the defining idea of self-supervised learning.",
+        "d": "Incorrect because semi-supervised learning combines a small amount of labeled data with a large amount of unlabeled data, which is not the training setup used by standard autoencoders."
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
     },
     {
-      "question": "6. What loss function is typically used to train autoencoders?",
+      "question": "6. Which loss function measures the pixel-wise squared difference between the input and the reconstruction?",
       "answers": {
         "a": "Cross-entropy loss",
         "b": "Hinge loss",

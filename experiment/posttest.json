@@ -53,18 +53,18 @@
       "difficulty": "beginner"
     },
     {
-      "question": "4. If reconstruction loss decreases during training, it indicates:",
+      "question": "4. If the reconstruction loss on the validation set decreases during training, it indicates:",
       "answers": {
-        "a": "The model is learning to better reconstruct inputs",
+        "a": "The model is learning to better reconstruct unseen inputs",
         "b": "The model is overfitting severely",
         "c": "The latent dimension is too large",
         "d": "The dataset is corrupted"
       },
       "explanations": {
-        "a": "Correct because lower loss means smaller difference between input and reconstruction.",
-        "b": "Incorrect because overfitting is indicated by training-validation gap, not just decreasing loss.",
-        "c": "Incorrect because loss decrease shows learning, regardless of dimension.",
-        "d": "Incorrect because decreasing loss shows successful training."
+        "a": "Correct because a lower validation loss means the difference between the input and the reconstruction is becoming smaller on data not used for training.",
+        "b": "Incorrect because overfitting is usually seen when training loss decreases but validation loss stops improving or starts increasing.",
+        "c": "Incorrect because a decrease in validation loss shows improved performance, not necessarily an overly large latent space.",
+        "d": "Incorrect because decreasing validation loss indicates successful learning, not corruption."
       },
       "correctAnswer": "a",
       "difficulty": "beginner"
