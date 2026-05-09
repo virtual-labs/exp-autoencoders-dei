@@ -24,7 +24,11 @@ The bottleneck layer forces the network to learn a compressed representation tha
 
 **Denoising Autoencoder:**
 
-A denoising autoencoder is trained to reconstruct a clean image from a corrupted version of the same image. If the clean input is represented as $x$, then the noisy input can be written as: $\tilde{x} = x + n$ where $n$ is random noise. The noisy image $\tilde{x}$ is given as input to the model, but the target output remains the original clean image $x$. The model learns to remove the noise and recover the underlying structure of the image. This helps the autoencoder learn features that are robust to corruption and useful for practical reconstruction tasks.
+A denoising autoencoder is trained to reconstruct a clean image from a corrupted version of the same image. If the clean input is represented as $x$, then the noisy input can be written as:
+
+$$ \tilde{x} = x + n $$
+
+where $n$ is random noise. The noisy image $\tilde{x}$ is given as input to the model, but the target output remains the original clean image $x$. The model learns to remove the noise and recover the underlying structure of the image. This helps the autoencoder learn features that are robust to corruption and useful for practical reconstruction tasks.
 
 ![Figure 1](images/image4.png)
 

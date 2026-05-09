@@ -27,33 +27,35 @@ This dataset is commonly used for testing machine learning algorithms because it
 
 **Step 3: Data Preprocessing**
 
-Convert images to tensors with pixel values normalised to [0, 1]. For denoising, define a noise addition function that adds Gaussian noise (noise factor = 0.25) while keeping targets clean.
+Convert images to tensors with pixel values normalised to [0, 1]. Define a function that adds Gaussian noise to the input image while keeping the clean image unchanged as the target. Use a noise factor such as 0.25 for training the denoising autoencoder.
 
 **Step 4: Define the Basic Autoencoder Architecture**
 
 Build a fully connected autoencoder with:
 
 * **Encoder:** flatten the 28×28 input into 784 features and compress it through multiple dense layers to a 2-dimensional latent vector
+
 * **Decoder:** expand the 2-dimensional latent vector back to 784 features and reshape it to 28×28
-* Use ReLU in the hidden layers and Sigmoid in the final output layer
+
+* Use **ReLU** in the hidden layers and **Sigmoid** in the final output layer
 
 The basic autoencoder is trained on clean images so that it learns to reconstruct the input without noise removal.
 
 **Encoder:**
 
 * Flatten 28×28 input → 784 dimensions
-* **Linear layers:** **784 → 512 → 256 → 128 → 64 → 32 → 16 → 8 → 4 → 2 (latent)**
+* Linear layers: 784 → 512 → 256 → 128 → 64 → 32 → 16 → 8 → 4 → 2 (latent)
 * Include BatchNorm1d and ReLU after each layer
 * Add Dropout (0.2, 0.2, 0.1) for regularisation in early layers
 
 **Decoder (mirror structure):**
 
-* **Linear layers:** **2 → 4 → 8 → 16 → 32 → 64 → 128 → 256 → 512 → 784**
+* Linear layers: 2 → 4 → 8 → 16 → 32 → 64 → 128 → 256 → 512 → 784
 * BatchNorm1d and ReLU between layers
 * Sigmoid activation at output to produce [0, 1] pixel values
 * Reshape to 28×28 image
 
-The **2-dimensional latent space** allows for direct visualisation of learned representations as scatter plots, where we can observe how the autoencoder organises different fashion categories in the compressed feature space.
+The 2-dimensional latent space allows for direct visualisation of learned representations as scatter plots, where we can observe how the autoencoder organises different fashion categories in the compressed feature space.
 
 **Step 5: Training Configuration**
 
