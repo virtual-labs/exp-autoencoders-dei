@@ -17,7 +17,7 @@
         <header class="header">
             <h1>Autoencoder Interactive Playground</h1>
             <p>Visual exploration of autoencoder architecture and denoising capabilities</p>
-            <a href="../../index.html" class="back-link">← Back to Simulation</a>
+            <a href="../../index.html" class="back-link">← Back</a>
         </header>
 
         <!-- Tab Navigation -->
@@ -109,6 +109,15 @@
                     The full autoencoder data flow in a single view — from raw input image, through progressive compression in the encoder, to the 2D latent space, through reconstruction in the decoder, to the final output image. Press <strong>Start Animation</strong> to watch the process unfold layer by layer.
                 </p>
 
+                <!-- Model Selection -->
+                <div class="control-group" style="margin-bottom: 1.5rem; max-width: 320px; margin-left: auto; margin-right: auto;">
+                    <label for="pipelineModelSelect" style="display:block; text-align:center; margin-bottom: 0.5rem;">Select Model Pipeline:</label>
+                    <select id="pipelineModelSelect" class="control-select" style="width: 100%;">
+                        <option value="basic">Basic Autoencoder (Clean Input)</option>
+                        <option value="denoising" selected>Denoising Autoencoder (Noisy Input)</option>
+                    </select>
+                </div>
+
                 <!-- Animation Controls -->
                 <div class="animation-controls">
                     <button id="startAnimation" class="control-btn">
@@ -177,8 +186,18 @@
                 <!-- Latent Space Plot -->
                 <div class="latent-space-container">
                     <div class="latent-plot">
-                        <img src="../notebook/images/latent_projection.png" alt="Latent Space Projection"
-                            class="latent-plot-img">
+                        <img src="../notebook/images/latent-space.png" alt="Latent Space Projection"
+                            class="latent-plot-img desktop-only">
+                        <div class="mobile-latent-plots mobile-only">
+                            <div class="latent-sub-plot">
+                                <h4>Basic AE Latent Space</h4>
+                                <img src="../notebook/images/basic ae latent.png" alt="Basic AE Latent Space">
+                            </div>
+                            <div class="latent-sub-plot">
+                                <h4>Denoising AE Latent Space</h4>
+                                <img src="../notebook/images/denoising ae latent.png" alt="Denoising AE Latent Space">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="latent-legend">

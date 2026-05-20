@@ -1,4 +1,3 @@
 ## Aim
 
-To study and implement autoencoders for unsupervised representation learning by training both a basic and a denoising autoencoder on the Fashion-MNIST dataset (mapping noisy inputs to clean outputs), and to analyze unsupervised compression and reconstruction performance through reconstruction grids and a 2-D projection of the learned latent space.
-
+To study and implement two related autoencoder models for unsupervised representation learning on the Fashion-MNIST dataset: a basic autoencoder for reconstructing clean images and a denoising autoencoder for reconstructing clean images from noisy inputs. The experiment also aims to analyze compression, reconstruction quality, noise robustness, and the structure of the learned 2-D latent space.

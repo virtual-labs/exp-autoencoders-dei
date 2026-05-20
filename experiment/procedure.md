@@ -2,32 +2,34 @@
 
 **Step 1: Import Required Libraries**
 
-Import PyTorch for model building, torchvision for datasets, NumPy for numerical operations, and Matplotlib for visualisation.
+Import PyTorch for model building, torchvision for datasets, NumPy for numerical operations, and Matplotlib for visualization.
 
 **Step 2: Load Fashion-MNIST Dataset**
 
-Load the dataset containing 60,000 training and 10,000 test images (28×28 grayscale). Each image belongs to one of 10 fashion categories. Create Data Loaders with batch size 128 for efficient training.
+Load the Fashion-MNIST dataset, which contains 60,000 training images and 10,000 test images. Each image is a 28×28 grayscale image belonging to one of 10 fashion classes. Create data loaders with a batch size of 128 for efficient training and evaluation.
+
+Normalize the pixel values to the range [0, 1]. Since the dataset is already cleanly structured, no special cleaning is required.
 
 **Fashion-MNIST Dataset**
 
 Fashion-MNIST is a dataset of grayscale images representing 10 different fashion categories. Each image is 28×28 pixels. The 10 classes are:
 
-1. T-shirt/top
-2. Trouser
-3. Pullover
-4. Dress
-5. Coat
-6. Sandal
-7. Shirt
-8. Sneaker
-9. Bag
-10. Ankle boot
+* T-shirt/top
+* Trouser
+* Pullover
+* Dress
+* Coat
+* Sandal
+* Shirt
+* Sneaker
+* Bag
+* Ankle boot
 
 This dataset is commonly used for testing machine learning algorithms because it is more challenging than standard MNIST digits while maintaining the same image format.
 
-**Step 3: Data Preprocessing**
+**Step 3: Create a Noise Addition Function**
 
-Convert images to tensors with pixel values normalised to [0, 1]. Define a function that adds Gaussian noise to the input image while keeping the clean image unchanged as the target. Use a noise factor such as 0.25 for training the denoising autoencoder.
+Define a function that adds Gaussian noise to the input image while keeping the clean image unchanged as the target. Use a noise factor of 0.25 when training the denoising autoencoder.
 
 **Step 4: Define the Basic Autoencoder Architecture**
 
@@ -55,7 +57,7 @@ The basic autoencoder is trained on clean images so that it learns to reconstruc
 * Sigmoid activation at output to produce [0, 1] pixel values
 * Reshape to 28×28 image
 
-The 2-dimensional latent space allows for direct visualisation of learned representations as scatter plots, where we can observe how the autoencoder organises different fashion categories in the compressed feature space.
+The 2-dimensional latent space allows for direct visualization of learned representations as scatter plots, where we can observe how the autoencoder organizes different fashion categories in the compressed feature space.
 
 **Step 5: Training Configuration**
 
@@ -64,7 +66,7 @@ The 2-dimensional latent space allows for direct visualisation of learned repres
 * Use ReduceLROnPlateau **Learning Rate Scheduler** to automatically reduce learning rate when training plateaus
 * **Training Duration:** Train for sufficient epochs until convergence
 * **Gradient Clipping:** Apply gradient clipping for training stability and to prevent exploding gradients
-* **Model Checkpointing:** Save the best performing model based on lowest validation loss
+* **Model Checkpointing:** Save the best performing model based on the lowest validation loss
 
 **Step 6: Train the Denoising Autoencoder**
 
@@ -75,7 +77,7 @@ For each epoch:
 * Compute combined loss (MSE + L1) between clean targets and reconstructions
 * Backpropagate gradients with clipping
 * Update weights and adjust learning rate
-* Track and save best model
+* Track and save the best model
 
 **Step 7: Visualisation 1 - Basic Reconstruction**
 
@@ -103,7 +105,7 @@ This visualisation reveals how the autoencoder organises different fashion categ
 
 **Step 11: Quantitative Evaluation**
 
-Calculate performance metrics on test set:
+Calculate performance metrics on the test set:
 
 * **MSE:** Mean Squared Error (lower is better)
 * **PSNR:** Peak Signal-to-Noise Ratio in dB (higher is better)

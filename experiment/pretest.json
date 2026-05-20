@@ -61,7 +61,7 @@
         "d": "Latent representations"
       },
       "explanations": {
-        "a": "Incorrect because denoising autoencoders require noisy inputs.",
+        "a": "Incorrect because denoising autoencoders requires noisy inputs.",
         "b": "Correct because the model learns to reconstruct clean images from corrupted inputs.",
         "c": "Incorrect because the input is corrupted versions of real images, not pure noise.",
         "d": "Incorrect because latent representations are internal, not inputs."
@@ -129,7 +129,7 @@
         "d": "Elimination of all reconstruction errors"
       },
       "explanations": {
-        "a": "Incorrect because dimensionality primarily affects visualisation, not training speed significantly.",
+        "a": "Incorrect because dimensionality primarily affects visualization, not training speed significantly.",
         "b": "Incorrect because very low dimensions may lose important information.",
         "c": "Correct because 2-D space can be plotted directly to see clustering patterns.",
         "d": "Incorrect because some reconstruction error always exists."
@@ -165,7 +165,7 @@
       "explanations": {
         "a": "Incorrect because no model guarantees perfect accuracy.",
         "b": "Correct because autoencoders are unsupervised and learn by reconstruction without needing labels.",
-        "c": "Incorrect because autoencoders work with various data types including images.",
+        "c": "Incorrect because autoencoders work with various data types, including images.",
         "d": "Incorrect because autoencoders still require training through backpropagation."
       },
       "correctAnswer": "b",

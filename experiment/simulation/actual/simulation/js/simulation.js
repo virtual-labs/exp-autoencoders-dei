@@ -234,7 +234,12 @@ function generateAnimationSteps() {
 document.addEventListener('DOMContentLoaded', () => {
     initializeTabs();
     initializeDenoisingControls();
-    buildPipelineDOM();
+    
+    // Ensure pipeline starts with the default selected in the dropdown
+    const modelSelect = document.getElementById('pipelineModelSelect');
+    const initialModel = modelSelect ? modelSelect.value : 'denoising';
+    
+    buildPipelineDOM(initialModel);
     initializePipelineControls();
 });
 
@@ -263,11 +268,18 @@ function initializeTabs() {
 // ===================================
 // PIPELINE — DUAL-ROW DOM BUILDER
 // ===================================
-function buildPipelineDOM() {
+function buildPipelineDOM(modelType = 'denoising') {
     const root = document.getElementById('pipelineFlow');
     if (!root) return;
     root.innerHTML = '';
     root.classList.add('pipeline-idle');
+
+    let inputSrc = '../notebook/images/level3_noise_0.5_input.png';
+    let outputSrc = '../notebook/images/level3_noise_0.5_reconstructed.png';
+    if (modelType === 'basic') {
+        inputSrc = '../notebook/images/original.png';
+        outputSrc = '../notebook/images/level1_noise_0.1_reconstructed.png';
+    }
 
     const pgrid = document.createElement('div');
     pgrid.className = 'pgrid';
@@ -275,7 +287,7 @@ function buildPipelineDOM() {
     // --- ROW 1: ENCODER ---
     const inWrap = document.createElement('div');
     inWrap.className = 'pgrid-in';
-    inWrap.appendChild(buildImgNode('pipe-img-input', '../notebook/images/original.png', 'Input Image', 'img-initial'));
+    inWrap.appendChild(buildImgNode('pipe-img-input', inputSrc, 'Input Image', 'img-initial'));
     inWrap.appendChild(buildArrow('arr-enc-in'));
     pgrid.appendChild(inWrap);
 
@@ -365,13 +377,13 @@ function buildPipelineDOM() {
     const outWrap = document.createElement('div');
     outWrap.className = 'pgrid-out';
     outWrap.appendChild(buildArrow('arr-dec-out'));
-    outWrap.appendChild(buildImgNode('pipe-img-output', '../notebook/images/level2_noise_0.3_reconstructed.png', 'Reconstructed', 'img-idle'));
+    outWrap.appendChild(buildImgNode('pipe-img-output', outputSrc, 'Reconstructed', 'img-idle'));
     pgrid.appendChild(outWrap);
 
     root.appendChild(pgrid);
 
     generateAnimationSteps();
-    initLiveDataTransformations();
+    initLiveDataTransformations(inputSrc, outputSrc, modelType);
 }
 
 const PRECOMPUTED_FRAMES = {};
@@ -395,14 +407,14 @@ function upscaleImage(image, size, smoothing) {
     return canvas;
 }
 
-function initLiveDataTransformations() {
+function initLiveDataTransformations(inputSrc, outputSrc, modelType) {
     const srcImg = new Image();
     srcImg.crossOrigin = "Anonymous";
-    srcImg.src = '../notebook/images/original.png';
+    srcImg.src = inputSrc;
     srcImg.onload = () => {
         const reconImg = new Image();
         reconImg.crossOrigin = "Anonymous";
-        reconImg.src = '../notebook/images/level2_noise_0.3_reconstructed.png';
+        reconImg.src = outputSrc;
         reconImg.onload = () => {
             // Encoder resolution steps (MUST NOT CHANGE)
             const encResolutions = [28, 22, 16, 11, 8, 5, 4, 3, 2, 2];
@@ -533,6 +545,14 @@ function initializePipelineControls() {
         if (!state.isAnimating) runPipelineAnimation();
     });
     document.getElementById('resetAnimation')?.addEventListener('click', resetPipeline);
+    
+    const modelSelect = document.getElementById('pipelineModelSelect');
+    if (modelSelect) {
+        modelSelect.addEventListener('change', (e) => {
+            if (state.isAnimating) resetPipeline();
+            buildPipelineDOM(e.target.value);
+        });
+    }
 }
 
 function resetPipeline() {

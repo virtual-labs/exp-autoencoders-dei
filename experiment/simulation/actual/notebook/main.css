@@ -297,6 +297,7 @@ body {
     margin-bottom: var(--spacing-xl);
     padding-bottom: var(--spacing-xl);
     border-bottom: 2px solid var(--border-light);
+    position: relative;
 }
 
 .notebook-header h1 {
@@ -309,6 +310,24 @@ body {
 .notebook-subtitle {
     color: var(--text-muted);
     font-size: 1rem;
+}
+
+.back-link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.back-link:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 /* Parameter Selector Dropdowns */

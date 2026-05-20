@@ -335,7 +335,8 @@ body {
     background: #f8f9fa;
     border-radius: 6px;
     border: 1px solid var(--border-color);
-    overflow-x: hidden; /* NO horizontal scrollbar */
+    overflow-x: auto; /* Enable horizontal scroll on mobile */
+    -webkit-overflow-scrolling: touch;
 }
 
 #pipelineFlow {
@@ -584,8 +585,8 @@ body {
    LATENT SPACE VISUALIZATION
    =================================== */
 .latent-space-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
     margin-bottom: 2rem;
 }
@@ -637,8 +638,9 @@ body {
 
 /* Category Images Grid */
 .category-images-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1.5rem;
     margin-top: 1.5rem;
 }
@@ -651,14 +653,13 @@ body {
 
 .category-image-item img {
     width: 100%;
-    max-width: 180px;
-    height: auto;
-    aspect-ratio: 1;
+    width: 90px; /* Force fixed width instead of relying entirely on max-width */
+    height: 90px;
     object-fit: contain;
-    border: 5px solid;
-    border-radius: 12px;
+    border: 3px solid;
+    border-radius: 8px;
     background: white;
-    padding: 8px;
+    padding: 6px;
     image-rendering: pixelated;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -682,8 +683,10 @@ body {
     }
 
     .category-labels-row {
-        flex-direction: column;
-        gap: 0.75rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        padding: 0.75rem;
     }
 }
 
@@ -739,6 +742,51 @@ body {
 }
 
 /* ===================================
+   VISIBILITY UTILITIES
+   =================================== */
+.mobile-only {
+    display: none !important;
+}
+
+.desktop-only {
+    display: block !important;
+}
+
+@media (max-width: 768px) {
+    .mobile-only {
+        display: block !important;
+    }
+
+    .desktop-only {
+        display: none !important;
+    }
+}
+
+/* ===================================
+   MOBILE LATENT PLOTS
+   =================================== */
+.mobile-latent-plots {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.latent-sub-plot h4 {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.latent-sub-plot img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+/* ===================================
    ANIMATIONS
    =================================== */
 @keyframes pulse {
@@ -766,9 +814,7 @@ body {
         align-items: center;
     }
 
-    .latent-space-container {
-        grid-template-columns: 1fr;
-    }
+
 
     #pipelineCanvas {
         width: 100%;
@@ -795,7 +841,14 @@ body {
     }
 
     .simulation-panel {
-        padding: 1.5rem;
+        padding: 1rem;
+    }
+
+    .pipeline-flow-container {
+        padding: 0.5rem;
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        border-radius: 0;
     }
 
     .reconstruction-container {
@@ -803,16 +856,83 @@ body {
     }
 
     .image-box {
-        width: 150px;
-        height: 150px;
+        width: 140px;
+        height: 140px;
     }
 
     .animation-controls {
         flex-direction: column;
+        width: 100%;
     }
 
     .control-btn {
         width: 100%;
         justify-content: center;
+    }
+
+    .pgrid {
+        min-width: 750px; /* Increased to ensure enough space for input/output */
+        transform: scale(0.85); /* Slightly smaller scale to fit better */
+        transform-origin: top center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Prevent cut-off by ensuring columns have enough space */
+    .pgrid-in {
+        justify-content: center;
+        padding-right: 1rem;
+    }
+    
+    .pgrid-out {
+        justify-content: center;
+        padding-left: 1rem;
+    }
+    
+    .pgrid-block {
+        padding: 0.4rem 0.8rem;
+    }
+
+    .pnode {
+        width: 32px;
+        height: 36px;
+        font-size: 0.8rem;
+    }
+
+    .pimg-frame {
+        width: 80px;
+        height: 80px;
+    }
+
+    .latent-plot {
+        overflow-x: hidden;
+    }
+
+    .latent-plot-img {
+        min-width: 0;
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-labels-row {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .category-image-item img {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .tabs {
+        flex-wrap: wrap;
+    }
+    
+    .tab-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        flex: 1 1 auto;
+        text-align: center;
     }
 }

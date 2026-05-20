@@ -41,7 +41,7 @@
         "a": "Salt-and-pepper noise only",
         "b": "Gaussian noise",
         "c": "No noise is added",
-        "d": "Colour channel noise"
+        "d": "Color channel noise"
       },
       "explanations": {
         "a": "Incorrect because while possible, Gaussian noise is used in this experiment.",
@@ -80,7 +80,7 @@
       "explanations": {
         "a": "Incorrect because ReLU allows unbounded positive values.",
         "b": "Incorrect because Tanh outputs [-1, 1], not [0, 1] for pixel values.",
-        "c": "Correct because Sigmoid outputs [0, 1], matching normalised pixel intensity range.",
+        "c": "Correct because Sigmoid outputs [0, 1], matching normalized pixel intensity range.",
         "d": "Incorrect because Softmax is for probability distributions over classes."
       },
       "correctAnswer": "c",
@@ -96,7 +96,7 @@
       },
       "explanations": {
         "a": "Incorrect because clustering shows the model learned meaningful patterns.",
-        "b": "Correct because similar items having similar latent codes shows good feature learning.",
+        "b": "Correct because similar items having similar latent codes show good feature learning.",
         "c": "Incorrect because good clustering indicates successful learning.",
         "d": "Incorrect because clustering quality is independent of dimension size."
       },
@@ -107,13 +107,13 @@
       "question": "7. What does the bottleneck layer force the autoencoder to learn?",
       "answers": {
         "a": "How to add more noise to images",
-        "b": "Only the pixel colours of images",
+        "b": "Only the pixel colors of images",
         "c": "A compressed representation capturing essential features of the input",
-        "d": "The exact copy of input without any compression"
+        "d": "The exact copy of the input without any compression"
       },
       "explanations": {
         "a": "Incorrect because the bottleneck compresses information, not adds noise.",
-        "b": "Incorrect because it learns abstract features, not just colour values.",
+        "b": "Incorrect because it learns abstract features, not just color values.",
         "c": "Correct because limited capacity forces the network to prioritize important patterns.",
         "d": "Incorrect because the bottleneck prevents storing full information."
       },
@@ -121,15 +121,15 @@
       "difficulty": "intermediate"
     },
     {
-      "question": "8. Why is batch normalisation used in the autoencoder architecture?",
+      "question": "8. Why is batch normalization used in the autoencoder architecture?",
       "answers": {
         "a": "To reduce the number of training epochs to zero",
-        "b": "To stabilise training by normalising layer inputs and reducing internal covariate shift",
+        "b": "To stabilize training by normalizing layer inputs and reducing internal covariate shift",
         "c": "To eliminate the need for activation functions",
         "d": "To automatically add noise to images"
       },
       "explanations": {
-        "a": "Incorrect because training is still required regardless of normalisation.",
+        "a": "Incorrect because training is still required regardless of normalization.",
         "b": "Correct because BatchNorm helps maintain stable distributions across layers during training.",
         "c": "Incorrect because activation functions provide non-linearity, BatchNorm doesn't replace them.",
         "d": "Incorrect because noise addition is a separate data augmentation step."
@@ -148,7 +148,7 @@
       "explanations": {
         "a": "Incorrect because PSNR measures reconstruction quality, not speed.",
         "b": "Correct because PSNR quantifies how close reconstructions are to originals.",
-        "c": "Incorrect because PSNR is a quality metric, not architecture metric.",
+        "c": "Incorrect because PSNR is a quality metric, not an architecture metric.",
         "d": "Incorrect because PSNR doesn't measure dimensions."
       },
       "correctAnswer": "b",
@@ -165,8 +165,8 @@
       "explanations": {
         "a": "Incorrect because underfitting means poor performance on both training and test data.",
         "b": "Incorrect because small latent dimensions typically prevent overfitting, not cause it.",
-        "c": "Incorrect because low learning rate affects convergence speed, not generalisation.",
-        "d": "Correct because the model memorised training data instead of learning generalisable features."
+        "c": "Incorrect because low learning rate affects convergence speed, not generalization.",
+        "d": "Correct because the model memorized training data instead of learning generalizable features."
       },
       "correctAnswer": "d",
       "difficulty": "intermediate"

@@ -2,25 +2,25 @@
 
 **Introduction to Autoencoders**
 
-Autoencoders are a type of neural network used for unsupervised learning of efficient data representations. Unlike supervised learning methods that require labelled data, autoencoders learn useful features by attempting to reconstruct their input. The main idea is to compress the input into a lower-dimensional representation and then reconstruct the original input from this compressed form using an encoder–decoder architecture.
+Autoencoders are a type of neural network used for unsupervised learning of efficient data representations. Unlike supervised learning methods that require labeled data, autoencoders learn useful features by attempting to reconstruct their input. The main idea is to compress the input into a lower-dimensional representation and then reconstruct the original input from this compressed form using an encoder–decoder architecture.
 
 > *"High-dimensional data can be converted to low-dimensional codes by training a multilayer neural network with a small central layer to reconstruct high-dimensional input vectors."*
 >
-> - Hinton & Salakhutdinov, Science, 2006
+> — Hinton & Salakhutdinov, Science, 2006
+
+The model is trained to minimize reconstruction error, so it learns to preserve the most important information while discarding unnecessary detail. This makes autoencoders useful for dimensionality reduction, compression, denoising, and feature learning.
 
 An autoencoder consists of two main parts:
 
-* **Encoder**: Compresses the input into a latent-space representation (bottleneck layer)
-* **Decoder**: Reconstructs the input from the latent representation
-
-The network is trained to minimise the difference between the input and its reconstruction, forcing it to learn the most important features of the data.
+* **Encoder**: converts the input into a latent-space representation
+* **Decoder**: reconstructs the input from the latent representation
 
 **Types of Autoencoders:**
 
 **Basic Autoencoder:**
 
-A basic autoencoder learns to compress and reconstruct clean input data. The input image is passed through the encoder, compressed into a bottleneck (latent) representation, and then reconstructed by the decoder.
-The bottleneck layer forces the network to learn a compressed representation that captures the essential features of the input while discarding redundant information.
+A basic autoencoder is trained on clean input images. The input passes through the encoder, which compresses it into a latent vector. The decoder then reconstructs the original image from that vector. The bottleneck layer forces the model to learn a compressed representation that captures the main structure of the input while discarding redundant information.
+This type of autoencoder is useful when the goal is to learn compact features from clean data.
 
 **Denoising Autoencoder:**
 
@@ -28,7 +28,8 @@ A denoising autoencoder is trained to reconstruct a clean image from a corrupted
 
 $$ \tilde{x} = x + n $$
 
-where $n$ is random noise. The noisy image $\tilde{x}$ is given as input to the model, but the target output remains the original clean image $x$. The model learns to remove the noise and recover the underlying structure of the image. This helps the autoencoder learn features that are robust to corruption and useful for practical reconstruction tasks.
+where $n$ is random noise. The noisy image $\tilde{x}$ is given as input to the model, but the target output remains the original clean image $x$. The model learns to remove the noise and recover the underlying structure of the image.
+This helps the autoencoder learn features that are robust to corruption and useful for practical reconstruction tasks.
 
 ![Figure 1](images/image4.png)
 
@@ -49,9 +50,7 @@ The reconstruction loss is computed by comparing the decoder's output with the o
 
 The latent space (bottleneck layer) is the compressed representation learned by the encoder. It is the stacked layers in the encoder, its depth, that enable autoencoders to learn hierarchical representations of data, where early layers capture low-level features (such as edges and textures) and deeper layers capture increasingly abstract patterns. The bottleneck itself plays a separate but equally important role: by constraining the dimensionality, it forces the network to retain only the most essential information and discard redundancy.
 
-For visualisation purposes, a 2-dimensional latent space is often used. When the latent dimension is 2, the encoded representations of input images can be directly plotted as a scatter plot to observe how the autoencoder organises different patterns in the data.
-
-Similar fashion items tend to cluster together in the learned latent space, indicating that the autoencoder has learned meaningful and discriminative representations.
+For visualisation purposes, a 2-dimensional latent space is often used. When the latent dimension is 2, the encoded representations of input images can be directly plotted as a scatter plot to observe how the autoencoder organises different patterns in the data. Similar fashion items tend to cluster together in the learned latent space, indicating that the autoencoder has learned meaningful and discriminative representations.
 
 **Fashion-MNIST Dataset**
 

@@ -20,27 +20,52 @@ const FASHION_CLASSES = [
 
 // Training loss data (simulated from the notebook results)
 const TRAINING_LOSSES = [
-    0.0542, 0.0542, 0.0542, 0.0542, 0.0542, // Epochs 1-5
-    0.0520, 0.0520, 0.0520, 0.0520, 0.0520, // Epochs 6-10
-    0.0518, 0.0518, 0.0518, 0.0518, 0.0518, // Epochs 11-15
-    0.0502, 0.0502, 0.0502, 0.0502, 0.0502, // Epochs 16-20
-    0.0487, 0.0487, 0.0487, 0.0487, 0.0487, // Epochs 21-25
-    0.0477, 0.0477, 0.0477, 0.0477, 0.0477, // Epochs 26-30
-    0.0467, 0.0467, 0.0467, 0.0467, 0.0467, // Epochs 31-35
-    0.0461, 0.0461, 0.0461, 0.0461, 0.0461, // Epochs 36-40
-    0.0442, 0.0442, 0.0442, 0.0442, 0.0442, // Epochs 41-45
-    0.0467, 0.0467, 0.0467, 0.0467, 0.0467, // Epochs 46-50
-    0.0482, 0.0482, 0.0482, 0.0482, 0.0482, // Epochs 51-55
-    0.0461, 0.0461, 0.0461, 0.0461, 0.0461, // Epochs 56-60
-    0.0458, 0.0458, 0.0458, 0.0458, 0.0458, // Epochs 61-65
-    0.0457, 0.0457, 0.0457, 0.0457, 0.0457, // Epochs 66-70
-    0.0455, 0.0455, 0.0455, 0.0455, 0.0455, // Epochs 71-75
-    0.0450, 0.0450, 0.0450, 0.0450, 0.0450, // Epochs 76-80
-    0.0459, 0.0459, 0.0459, 0.0459, 0.0459, // Epochs 81-85
-    0.0448, 0.0448, 0.0448, 0.0448, 0.0448, // Epochs 86-90
-    0.0447, 0.0447, 0.0447, 0.0447, 0.0447, // Epochs 91-95
-    0.0445, 0.0445, 0.0445, 0.0445, 0.0445  // Epochs 96-100
+    0.0534, 0.0534, 0.0534, 0.0534, 0.0534, // Epochs 1-5
+    0.0535, 0.0535, 0.0535, 0.0535, 0.0535, // Epochs 6-10
+    0.0485, 0.0485, 0.0485, 0.0485, 0.0485, // Epochs 11-15
+    0.0488, 0.0488, 0.0488, 0.0488, 0.0488, // Epochs 16-20
+    0.0468, 0.0468, 0.0468, 0.0468, 0.0468, // Epochs 21-25
+    0.0476, 0.0476, 0.0476, 0.0476, 0.0476, // Epochs 26-30
+    0.0461, 0.0461, 0.0461, 0.0461, 0.0461, // Epochs 31-35
+    0.0459, 0.0459, 0.0459, 0.0459, 0.0459, // Epochs 36-40
+    0.0455, 0.0455, 0.0455, 0.0455, 0.0455, // Epochs 41-45
+    0.0452, 0.0452, 0.0452, 0.0452, 0.0452, // Epochs 46-50
+    0.0450, 0.0450, 0.0450, 0.0450, 0.0450, // Epochs 51-55
+    0.0448, 0.0448, 0.0448, 0.0448, 0.0448, // Epochs 56-60
+    0.0446, 0.0446, 0.0446, 0.0446, 0.0446, // Epochs 61-65
+    0.0445, 0.0445, 0.0445, 0.0445, 0.0445, // Epochs 66-70
+    0.0444, 0.0444, 0.0444, 0.0444, 0.0444, // Epochs 71-75
+    0.0444, 0.0444, 0.0444, 0.0444, 0.0444, // Epochs 76-80
+    0.0441, 0.0441, 0.0441, 0.0441, 0.0441, // Epochs 81-85
+    0.0441, 0.0441, 0.0441, 0.0441, 0.0441, // Epochs 86-90
+    0.0442, 0.0442, 0.0442, 0.0442, 0.0442, // Epochs 91-95
+    0.0439, 0.0439, 0.0439, 0.0439, 0.0439  // Epochs 96-100
 ];
+
+// Basic AE training loss data (clean→clean, no noise)
+const BASIC_TRAINING_LOSSES = [
+    0.0536, 0.0536, 0.0536, 0.0536, 0.0536, // Epochs 1-5
+    0.0507, 0.0507, 0.0507, 0.0507, 0.0507, // Epochs 6-10
+    0.0506, 0.0506, 0.0506, 0.0506, 0.0506, // Epochs 11-15
+    0.0499, 0.0499, 0.0499, 0.0499, 0.0499, // Epochs 16-20
+    0.0464, 0.0464, 0.0464, 0.0464, 0.0464, // Epochs 21-25
+    0.0458, 0.0458, 0.0458, 0.0458, 0.0458, // Epochs 26-30
+    0.0455, 0.0455, 0.0455, 0.0455, 0.0455, // Epochs 31-35
+    0.0451, 0.0451, 0.0451, 0.0451, 0.0451, // Epochs 36-40
+    0.0450, 0.0450, 0.0450, 0.0450, 0.0450, // Epochs 41-45
+    0.0449, 0.0449, 0.0449, 0.0449, 0.0449, // Epochs 46-50
+    0.0447, 0.0447, 0.0447, 0.0447, 0.0447, // Epochs 51-55
+    0.0445, 0.0445, 0.0445, 0.0445, 0.0445, // Epochs 56-60
+    0.0445, 0.0445, 0.0445, 0.0445, 0.0445, // Epochs 61-65
+    0.0446, 0.0446, 0.0446, 0.0446, 0.0446, // Epochs 66-70
+    0.0445, 0.0445, 0.0445, 0.0445, 0.0445, // Epochs 71-75
+    0.0445, 0.0445, 0.0445, 0.0445, 0.0445, // Epochs 76-80
+    0.0445, 0.0445, 0.0445, 0.0445, 0.0445, // Epochs 81-85
+    0.0445, 0.0445, 0.0445, 0.0445, 0.0445, // Epochs 86-90
+    0.0444, 0.0444, 0.0444, 0.0444, 0.0444, // Epochs 91-95
+    0.0444, 0.0444, 0.0444, 0.0444, 0.0444  // Epochs 96-100
+];
+
 
 // ===================================
 // INITIALIZATION
@@ -133,46 +158,70 @@ function setupRunButtons() {
         step1Btn.addEventListener('click', () => runStep1());
     }
 
-    // Step 2: Load Dataset
+    // Step 2: Add dataset
     const step2Btn = document.querySelector('#step-2 .run-btn');
     if (step2Btn) {
         step2Btn.addEventListener('click', () => runStep2());
     }
 
-    // Step 3: Model Architecture
+    // Step 3: Load Dataset
     const step3Btn = document.querySelector('#step-3 .run-btn');
     if (step3Btn) {
         step3Btn.addEventListener('click', () => runStep3());
     }
 
-    // Step 4: Model Training
+    // Step 4: Show Dataset Sample
     const step4Btn = document.querySelector('#step-4 .run-btn');
     if (step4Btn) {
         step4Btn.addEventListener('click', () => runStep4());
     }
 
-    // Step 5: Reconstruction
+    // Step 5: Model Architecture
     const step5Btn = document.querySelector('#step-5 .run-btn');
     if (step5Btn) {
         step5Btn.addEventListener('click', () => runStep5());
     }
 
-    // Step 6: Noise Robustness
+    // Step 6: Basic AE Training
     const step6Btn = document.querySelector('#step-6 .run-btn');
     if (step6Btn) {
         step6Btn.addEventListener('click', () => runStep6());
     }
 
-    // Step 7: Latent Space
+    // Step 7: Basic AE Reconstruction
     const step7Btn = document.querySelector('#step-7 .run-btn');
     if (step7Btn) {
         step7Btn.addEventListener('click', () => runStep7());
     }
 
-    // Step 8: Quantitative Evaluation
+    // Step 8: Denoising AE Training
     const step8Btn = document.querySelector('#step-8 .run-btn');
     if (step8Btn) {
         step8Btn.addEventListener('click', () => runStep8());
+    }
+
+    // Step 9: Denoising Reconstruction
+    const step9Btn = document.querySelector('#step-9 .run-btn');
+    if (step9Btn) {
+        step9Btn.addEventListener('click', () => runStep9());
+    }
+
+    // Step 10: Noise Robustness
+    const step10Btn = document.querySelector('#step-10 .run-btn');
+    if (step10Btn) {
+        step10Btn.addEventListener('click', () => runStep10());
+    }
+
+    // Step 11: Latent Space
+    const step11Btn = document.querySelector('#step-11 .run-btn');
+    if (step11Btn) {
+        step11Btn.addEventListener('click', () => runStep11());
+    }
+
+    // Step 12: Quantitative Evaluation
+    const step12Btn = document.querySelector('#step-12 .run-btn');
+    if (step12Btn) {
+        step12Btn.addEventListener('click', () => runStep12());
     }
 }
 
@@ -291,7 +340,7 @@ function runStep1() {
     }, 800);
 }
 
-// Step 2: Load Dataset
+// Step 2: Add dataset
 function runStep2() {
     const btn = document.querySelector('#step-2 .run-btn');
     const output = document.getElementById('output-2');
@@ -301,9 +350,6 @@ function runStep2() {
     setStepRunning(2);
 
     setTimeout(() => {
-        // Create dataset grid
-        createDatasetGrid();
-
         output.style.display = 'block';
         btn.innerHTML = '✓ Completed';
         btn.classList.add('completed');
@@ -314,6 +360,32 @@ function runStep2() {
         if (!appState.isRunningAll) {
             setTimeout(() => {
                 appState.completedSteps.push(2);
+                updateStepButtons();
+            }, 500);
+        }
+    }, 1000);
+}
+
+// Step 3: Load Dataset
+function runStep3() {
+    const btn = document.querySelector('#step-3 .run-btn');
+    const output = document.getElementById('output-3');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span>Running...</span>';
+    setStepRunning(3);
+
+    setTimeout(() => {
+        output.style.display = 'block';
+        btn.innerHTML = '✓ Completed';
+        btn.classList.add('completed');
+        btn.disabled = true; // Keep disabled after completion
+        setStepComplete(3);
+        markStepComplete(3);
+
+        if (!appState.isRunningAll) {
+            setTimeout(() => {
+                appState.completedSteps.push(3);
                 updateStepButtons();
             }, 500);
         }
@@ -361,14 +433,43 @@ function createDatasetGrid() {
     });
 }
 
-// Step 3: Model Architecture
-function runStep3() {
-    const btn = document.querySelector('#step-3 .run-btn');
-    const output = document.getElementById('output-3');
+// Step 4: Show Dataset Sample
+function runStep4() {
+    const btn = document.querySelector('#step-4 .run-btn');
+    const output = document.getElementById('output-4');
 
     btn.disabled = true;
     btn.innerHTML = '<span>Running...</span>';
-    setStepRunning(3);
+    setStepRunning(4);
+
+    setTimeout(() => {
+        // Create dataset grid
+        createDatasetGrid();
+
+        output.style.display = 'block';
+        btn.innerHTML = '✓ Completed';
+        btn.classList.add('completed');
+        btn.disabled = true; // Keep disabled after completion
+        setStepComplete(4);
+        markStepComplete(4);
+
+        if (!appState.isRunningAll) {
+            setTimeout(() => {
+                appState.completedSteps.push(4);
+                updateStepButtons();
+            }, 500);
+        }
+    }, 1000);
+}
+
+// Step 5: Model Architecture
+function runStep5() {
+    const btn = document.querySelector('#step-5 .run-btn');
+    const output = document.getElementById('output-5');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span>Running...</span>';
+    setStepRunning(5);
 
     setTimeout(() => {
         // Draw the architecture diagram - REMOVED for static output
@@ -378,12 +479,12 @@ function runStep3() {
         btn.innerHTML = '✓ Completed';
         btn.classList.add('completed');
         btn.disabled = true; // Keep disabled after completion
-        setStepComplete(3);
-        markStepComplete(3);
+        setStepComplete(5);
+        markStepComplete(5);
 
         if (!appState.isRunningAll) {
             setTimeout(() => {
-                appState.completedSteps.push(3);
+                appState.completedSteps.push(5);
                 updateStepButtons();
             }, 500);
         }
@@ -556,23 +657,120 @@ function drawArchitectureDiagram() {
     ctx.fillText('Note: BatchNorm and ReLU activation applied after each layer (except latent). Dropout(0.1) after first encoder layer.', width / 2, height - 25);
 }
 
-// Step 4: Model Training
-function runStep4() {
-    const btn = document.querySelector('#step-4 .run-btn');
-    const output = document.getElementById('output-4');
+// Step 6: Basic AE Training
+function runStep6() {
+    const btn = document.querySelector('#step-6 .run-btn');
+    const output = document.getElementById('output-6');
 
     btn.disabled = true;
     btn.innerHTML = '<span>Running...</span>';
-    setStepRunning(4);
+    setStepRunning(6);
+
+    output.style.display = 'block';
+
+    simulateBasicTraining();
+}
+
+function simulateBasicTraining() {
+    const outputContainer = document.getElementById('basicTrainingOutput');
+    if (!outputContainer) return;
+
+    outputContainer.innerHTML = '<div class="output-text">Starting basic autoencoder training...</div>';
+
+    let currentEpoch = 0;
+    const totalEpochs = 100;
+    const displayInterval = 5;
+
+    const interval = setInterval(() => {
+        if (currentEpoch >= totalEpochs) {
+            clearInterval(interval);
+
+            const btn = document.querySelector('#step-6 .run-btn');
+            btn.innerHTML = '✓ Completed';
+            btn.classList.add('completed');
+            btn.disabled = true;
+            setStepComplete(6);
+            markStepComplete(6);
+
+            const bestLoss = Math.min(...BASIC_TRAINING_LOSSES);
+            const completionMsg = document.createElement('div');
+            completionMsg.className = 'output-text';
+            completionMsg.style.marginTop = '10px';
+            completionMsg.style.color = '#198754';
+            completionMsg.textContent = `Training completed! Best Loss: ${bestLoss.toFixed(4)}`;
+            outputContainer.appendChild(completionMsg);
+
+            if (!appState.isRunningAll) {
+                setTimeout(() => {
+                    appState.completedSteps.push(6);
+                    updateStepButtons();
+                }, 500);
+            }
+            return;
+        }
+
+        currentEpoch += 1;
+
+        if (currentEpoch % displayInterval === 0) {
+            const epochLine = document.createElement('div');
+            epochLine.className = 'output-text';
+            epochLine.style.fontFamily = "'Consolas', 'Monaco', 'Courier New', monospace";
+            epochLine.style.fontSize = '0.85rem';
+            epochLine.style.padding = '2px 8px';
+            epochLine.style.borderLeft = 'none';
+            epochLine.style.background = 'transparent';
+            epochLine.style.margin = '0';
+
+            const loss = BASIC_TRAINING_LOSSES[currentEpoch - 1];
+            epochLine.innerHTML = `Epoch [<span style="color: #6f42c1;">${currentEpoch}/${totalEpochs}</span>] Loss: <span style="color: #dc3545;">${loss.toFixed(4)}</span>`;
+            outputContainer.appendChild(epochLine);
+        }
+    }, 30);
+}
+
+// Step 7: Basic AE Reconstruction
+function runStep7() {
+    const btn = document.querySelector('#step-7 .run-btn');
+    const output = document.getElementById('output-7');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span>Running...</span>';
+    setStepRunning(7);
+
+    setTimeout(() => {
+        output.style.display = 'block';
+        btn.innerHTML = '✓ Completed';
+        btn.classList.add('completed');
+        btn.disabled = true;
+        setStepComplete(7);
+        markStepComplete(7);
+
+        if (!appState.isRunningAll) {
+            setTimeout(() => {
+                appState.completedSteps.push(7);
+                updateStepButtons();
+            }, 500);
+        }
+    }, 1000);
+}
+
+// Step 8: Denoising AE Training
+function runStep8() {
+    const btn = document.querySelector('#step-8 .run-btn');
+    const output = document.getElementById('output-8');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span>Running...</span>';
+    setStepRunning(8);
 
     output.style.display = 'block';
 
     // Simulate training
-    simulateTraining();
+    simulateDenoisingTraining();
 }
 
-function simulateTraining() {
-    const outputContainer = document.getElementById('trainingOutput');
+function simulateDenoisingTraining() {
+    const outputContainer = document.getElementById('denoisingTrainingOutput');
     if (!outputContainer) return;
 
     // Clear previous content and add starting message
@@ -588,12 +786,12 @@ function simulateTraining() {
         if (currentEpoch >= totalEpochs) {
             clearInterval(interval);
 
-            const btn = document.querySelector('#step-4 .run-btn');
+            const btn = document.querySelector('#step-8 .run-btn');
             btn.innerHTML = '✓ Completed';
             btn.classList.add('completed');
             btn.disabled = true; // Keep disabled after completion
-            setStepComplete(4);
-            markStepComplete(4);
+            setStepComplete(8);
+            markStepComplete(8);
 
             // Add completion message
             const bestLoss = Math.min(...TRAINING_LOSSES);
@@ -606,7 +804,7 @@ function simulateTraining() {
 
             if (!appState.isRunningAll) {
                 setTimeout(() => {
-                    appState.completedSteps.push(4);
+                    appState.completedSteps.push(8);
                     updateStepButtons();
                 }, 500);
             }
@@ -636,52 +834,52 @@ function simulateTraining() {
     }, 30); // Faster animation
 }
 
-// Step 5: Reconstruction Results
-function runStep5() {
-    const btn = document.querySelector('#step-5 .run-btn');
-    const output = document.getElementById('output-5');
+// Step 9: Denoising Reconstruction
+function runStep9() {
+    const btn = document.querySelector('#step-9 .run-btn');
+    const output = document.getElementById('output-9');
 
     btn.disabled = true;
     btn.innerHTML = '<span>Running...</span>';
-    setStepRunning(5);
+    setStepRunning(9);
 
     setTimeout(() => {
         output.style.display = 'block';
         btn.innerHTML = '✓ Completed';
         btn.classList.add('completed');
         btn.disabled = true; // Keep disabled after completion
-        setStepComplete(5);
-        markStepComplete(5);
+        setStepComplete(9);
+        markStepComplete(9);
 
         if (!appState.isRunningAll) {
             setTimeout(() => {
-                appState.completedSteps.push(5);
+                appState.completedSteps.push(9);
                 updateStepButtons();
             }, 500);
         }
     }, 1000);
 }
 
-// Step 6: Noise Robustness
-function runStep6() {
-    const btn = document.querySelector('#step-6 .run-btn');
-    const output = document.getElementById('output-6');
+// Step 10: Noise Robustness
+function runStep10() {
+    const btn = document.querySelector('#step-10 .run-btn');
+    const output = document.getElementById('output-10');
 
     btn.disabled = true;
     btn.innerHTML = '<span>Running...</span>';
-    setStepRunning(6);
+    setStepRunning(10);
 
     setTimeout(() => {
         output.style.display = 'block';
         btn.innerHTML = '✓ Completed';
         btn.classList.add('completed');
         btn.disabled = true; // Keep disabled after completion
-        setStepComplete(6);
-        markStepComplete(6);
+        setStepComplete(10);
+        markStepComplete(10);
 
         if (!appState.isRunningAll) {
             setTimeout(() => {
-                appState.completedSteps.push(6);
+                appState.completedSteps.push(10);
                 updateStepButtons();
             }, 500);
         }
@@ -810,41 +1008,41 @@ function updateNoiseImages(noiseLevel, selectedClass = 'boot') {
 }
 
 
-// Step 7: Latent Space
-function runStep7() {
-    const btn = document.querySelector('#step-7 .run-btn');
-    const output = document.getElementById('output-7');
+// Step 11: Latent Space
+function runStep11() {
+    const btn = document.querySelector('#step-11 .run-btn');
+    const output = document.getElementById('output-11');
 
     btn.disabled = true;
     btn.innerHTML = '<span>Running...</span>';
-    setStepRunning(7);
+    setStepRunning(11);
 
     setTimeout(() => {
         output.style.display = 'block';
         btn.innerHTML = '✓ Completed';
         btn.classList.add('completed');
         btn.disabled = true; // Keep disabled after completion
-        setStepComplete(7);
-        markStepComplete(7);
+        setStepComplete(11);
+        markStepComplete(11);
     }, 1500);
 }
 
-// Step 8: Quantitative Evaluation
-function runStep8() {
-    const btn = document.querySelector('#step-8 .run-btn');
-    const output = document.getElementById('output-8');
+// Step 12: Quantitative Evaluation
+function runStep12() {
+    const btn = document.querySelector('#step-12 .run-btn');
+    const output = document.getElementById('output-12');
 
     btn.disabled = true;
     btn.innerHTML = '<span>Running...</span>';
-    setStepRunning(8);
+    setStepRunning(12);
 
     setTimeout(() => {
         output.style.display = 'block';
         btn.innerHTML = '✓ Completed';
         btn.classList.add('completed');
         btn.disabled = true; // Keep disabled after completion
-        setStepComplete(8);
-        markStepComplete(8);
+        setStepComplete(12);
+        markStepComplete(12);
     }, 1500);
 }
 
