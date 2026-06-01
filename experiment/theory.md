@@ -29,12 +29,7 @@ A denoising autoencoder is trained to reconstruct a clean image from a corrupted
 $$ \tilde{x} = x + n $$
 
 where $n$ is random noise. The noisy image $\tilde{x}$ is given as input to the model, but the target output remains the original clean image $x$. The model learns to remove the noise and recover the underlying structure of the image.
-This helps the autoencoder learn features that are robust to corruption and useful for practical reconstruction tasks.
-
-![Figure 1](images/image4.png)
-
-*Figure 1-  Denoising autoencoder*
-*(Source: Deep Learning. Ian Goodfellow, Yoshua Bengio, and Aaron Courville, MIT Press.)*
+This helps the autoencoder learn features that are robust to corruption and useful for practical reconstruction task
 
 The training process for a denoising autoencoder can be written as:
 
