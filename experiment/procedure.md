@@ -59,7 +59,18 @@ The basic autoencoder is trained on clean images so that it learns to reconstruc
 
 The 2-dimensional latent space allows for direct visualization of learned representations as scatter plots, where we can observe how the autoencoder organizes different fashion categories in the compressed feature space.
 
-**Step 5: Training Configuration**
+**Step 5: Train the Basic Autoencoder**
+
+For each epoch:
+
+* Pass clean images through the encoder and decoder
+* Compute MSE loss between the clean input and the reconstruction
+* Backpropagate gradients and update weights using the AdamW optimiser
+* Track training and validation loss to monitor convergence
+
+Save the best-performing basic autoencoder model based on the lowest validation loss.
+
+**Step 6: Training Configuration**
 
 * **Loss Function:** Combined MSE and L1 loss for better detail preservation
 * **Optimiser:** AdamW with appropriate learning rate and weight decay for regularisation
@@ -68,7 +79,7 @@ The 2-dimensional latent space allows for direct visualization of learned repres
 * **Gradient Clipping:** Apply gradient clipping for training stability and to prevent exploding gradients
 * **Model Checkpointing:** Save the best performing model based on the lowest validation loss
 
-**Step 6: Train the Denoising Autoencoder**
+**Step 7: Train the Denoising Autoencoder**
 
 For each epoch:
 
@@ -79,7 +90,7 @@ For each epoch:
 * Update weights and adjust learning rate
 * Track and save the best model
 
-**Step 7: Visualisation 1 - Basic Reconstruction**
+**Step 8: Visualisation 1 - Basic Reconstruction**
 
 Display 8 test samples showing:
 
@@ -89,21 +100,21 @@ Display 8 test samples showing:
 
 This demonstrates the denoising capability side-by-side.
 
-**Step 8: Visualisation 2 - Error Maps**
+**Step 9: Visualisation 2 - Error Maps**
 
 Create heat maps showing pixel-wise reconstruction errors for 6 samples. Brighter regions indicate higher errors; darker regions show better reconstruction. This helps identify which image regions are harder to reconstruct.
 
-**Step 9: Visualisation 3 - Noise Robustness Test**
+**Step 10: Visualisation 3 - Noise Robustness Test**
 
 Test model performance at different noise levels (0.1, 0.25, 0.4, 0.6) on the same image. Display original, noisy input, and reconstruction for each noise level to show how well the model handles varying corruption.
 
-**Step 10: Visualisation 4 - Latent Space Projection**
+**Step 11: Visualisation 4 - Latent Space Projection**
 
 Extract 2-D latent representations for all test images. Since the latent dimension is already 2, plot all test samples directly as points in a 2-D scatter plot, with different colours representing the 10 fashion classes.
 
 This visualisation reveals how the autoencoder organises different fashion categories in the learned latent space. Similar items should cluster together, demonstrating that the autoencoder has learned meaningful representations.
 
-**Step 11: Quantitative Evaluation**
+**Step 12: Quantitative Evaluation**
 
 Calculate performance metrics on the test set:
 
