@@ -29,7 +29,7 @@ A denoising autoencoder is trained to reconstruct a clean image from a corrupted
 $$ \tilde{x} = x + n $$
 
 where $n$ is random noise. The noisy image $\tilde{x}$ is given as input to the model, but the target output remains the original clean image $x$. The model learns to remove the noise and recover the underlying structure of the image.
-This helps the autoencoder learn features that are robust to corruption and useful for practical reconstruction task
+This helps the autoencoder learn features that are robust to corruption and useful for practical reconstruction tasks.
 
 The training process for a denoising autoencoder can be written as:
 
@@ -40,6 +40,18 @@ The training process for a denoising autoencoder can be written as:
 * **Loss:** $\mathcal{L}\!\left(x,\, g\!\left(f\!\left(\tilde{x}\right)\right)\right)$
 
 The reconstruction loss is computed by comparing the decoder's output with the original clean image. This forces the network to learn features that are resilient to noise and capture the underlying structure of the data.
+
+![Figure 1](images/image8.png)
+
+*Figure 1 — Geometric interpretation of a denoising autoencoder*
+
+This figure illustrates the manifold-learning interpretation of a denoising autoencoder (DAE). The black curve, denoted as the data manifold $M$, represents the low-dimensional structure on which clean data samples naturally lie. The red crosses correspond to clean training samples $x$ distributed along this manifold. During training, a clean sample $x$ is artificially corrupted to produce a noisy version $\tilde{x}$ (green point), which lies away from the manifold. The denoising autoencoder processes this corrupted input through an encoder–decoder mapping and produces a reconstruction $\hat{x}$ (gray point) that is pushed back toward the manifold and close to the original clean sample. The reconstruction error $C(\hat{x},\, x)$ measures the discrepancy between the reconstructed sample and the true clean sample and is minimised during training. The green arrows along the manifold represent the learned denoising vector field, indicating that the autoencoder learns to move corrupted inputs toward regions of high data density on the manifold. Consequently, the DAE not only reconstructs clean samples from noisy observations but also learns the underlying geometric structure of the data distribution.
+
+![Figure 2](images/image9.png)
+
+*Figure 2 — Denoising autoencoder reconstruction on the learned manifold of handwritten digit 7*
+
+This figure illustrates the learned latent manifold of handwritten digit **7** representations in a denoising autoencoder. The red curve represents a low-dimensional manifold in latent space, where each point corresponds to a latent code whose decoded image is shown in the associated box. The smoother and cleaner digit images near the centre indicate regions of higher data density, while the noisier images toward the ends represent less representative latent states. The arrow ($\rightarrow$) depicts the denoising process, where corrupted representations are guided toward the manifold, resulting in a cleaner reconstructed digit that preserves the essential characteristics of the original input.
 
 **Latent Space Representation:**
 
