@@ -1,0 +1,16 @@
+
+/home/runner/work/exp-autoencoders-dei/exp-autoencoders-dei/experiment/simulation/actual/notebook/images/script.js
+  146:10  error  Parsing error: Identifier 'initializeScrolling' has already been declared
+
+/home/runner/work/exp-autoencoders-dei/exp-autoencoders-dei/experiment/simulation/actual/notebook/script.js
+   494:10  warning  'drawArchitectureDiagram' is defined but never used  no-unused-vars
+   889:10  warning  'setupNoiseControl' is defined but never used        no-unused-vars
+  1078:10  warning  'sleep' is defined but never used                    no-unused-vars
+
+/home/runner/work/exp-autoencoders-dei/exp-autoencoders-dei/experiment/simulation/actual/simulation/js/simulation.js
+   25:5   warning  'cacheLoadedCount' is assigned a value but never used  no-unused-vars
+   26:5   warning  'cacheTotalCount' is assigned a value but never used   no-unused-vars
+  410:59  warning  'modelType' is defined but never used                  no-unused-vars
+
+✖ 7 problems (1 error, 6 warnings)
+

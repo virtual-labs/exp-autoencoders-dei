@@ -1,0 +1,95 @@
+# BASIC AUTOENCODER TRAINING
+# Trains on clean images only — no noise added (clean → clean)
+
+basic_model = Autoencoder().to(device)
+
+criterion_mse = nn.MSELoss()
+criterion_l1 = nn.L1Loss()
+optimizer_basic = optim.Adam(basic_model.parameters(), lr=0.001)
+scheduler_basic = optim.lr_scheduler.ReduceLROnPlateau(optimizer_basic, mode='min', patience=5)
+
+epochs = 100
+best_loss_basic = float('inf')
+
+for epoch in range(epochs):
+    basic_model.train()
+    total_loss = 0
+
+    for images, _ in train_loader:
+        images = images.to(device)
+        outputs, _ = basic_model(images)
+
+        loss_mse = criterion_mse(outputs, images.view(images.size(0), -1))
+        loss_l1 = criterion_l1(outputs, images.view(images.size(0), -1))
+        loss = 0.7 * loss_mse + 0.3 * loss_l1
+
+        optimizer_basic.zero_grad()
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(basic_model.parameters(), max_norm=1.0)
+        optimizer_basic.step()
+        total_loss += loss.item()
+
+    avg_loss = total_loss / len(train_loader)
+    scheduler_basic.step(avg_loss)
+
+    if avg_loss < best_loss_basic:
+        best_loss_basic = avg_loss
+
+    if (epoch + 1) % 5 == 0:
+        print(f"Epoch [{epoch+1}/{epochs}] Loss: {avg_loss:.4f}")
+
+print(f"\nTraining completed! Best Loss: {best_loss_basic:.4f}")
+
+Epoch [5/100] Loss: 0.0540
+Epoch [10/100] Loss: 0.0501
+Epoch [15/100] Loss: 0.0506
+Epoch [20/100] Loss: 0.0480
+Epoch [25/100] Loss: 0.0473
+Epoch [30/100] Loss: 0.0468
+Epoch [35/100] Loss: 0.0463
+Epoch [40/100] Loss: 0.0460
+Epoch [45/100] Loss: 0.0458
+Epoch [50/100] Loss: 0.0455
+Epoch [55/100] Loss: 0.0454
+Epoch [60/100] Loss: 0.0455
+Epoch [65/100] Loss: 0.0449
+Epoch [70/100] Loss: 0.0449
+Epoch [75/100] Loss: 0.0447
+Epoch [80/100] Loss: 0.0446
+Epoch [85/100] Loss: 0.0446
+Epoch [90/100] Loss: 0.0444
+Epoch [95/100] Loss: 0.0443
+Epoch [100/100] Loss: 0.0445
+
+Training completed! Best Loss: 0.0443
+
+
+# VISUALIZATION: BASIC RECONSTRUCTION
+# Display original and reconstructed images side-by-side (no noise — clean input only)
+
+basic_model.eval()
+images, _ = next(iter(test_loader))
+images = images.to(device)
+
+with torch.no_grad():
+    reconstructed_basic, _ = basic_model(images)
+
+# Display 8 samples
+n = 8
+plt.figure(figsize=(12, 4))
+
+for i in range(n):
+    # Original
+    plt.subplot(2, n, i+1)
+    plt.imshow(images[i].cpu().squeeze(), cmap='gray')
+    plt.axis('off')
+
+    # Reconstructed
+    plt.subplot(2, n, i+1+n)
+    plt.imshow(reconstructed_basic[i].view(28,28).cpu(), cmap='gray')
+    plt.axis('off')
+
+plt.tight_layout()
+plt.show()
+
+print("Basic reconstruction visualization completed!")
